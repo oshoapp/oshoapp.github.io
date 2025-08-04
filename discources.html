@@ -16,28 +16,51 @@
   <link rel="stylesheet" href="style.css">
   
   <style>
-/* HTML: <div class="loader"></div> */
-.loader {
-  width: 45px;
-  aspect-ratio: .75;
-  --c: no-repeat linear-gradient(#000 0 0);
-  background: 
-    var(--c) 0%   50%,
-    var(--c) 50%  50%,
-    var(--c) 100% 50%;
-  animation: l7 1s infinite linear alternate;
-  position: fixed;
-  top:50%;
-  left:50%;
-  transform: translate(-50%,-50%);
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  padding: 1rem;
 }
-@keyframes l7 {
-  0%  {background-size: 20% 50% ,20% 50% ,20% 50% }
-  20% {background-size: 20% 20% ,20% 50% ,20% 50% }
-  40% {background-size: 20% 100%,20% 20% ,20% 50% }
-  60% {background-size: 20% 50% ,20% 100%,20% 20% }
-  80% {background-size: 20% 50% ,20% 50% ,20% 100%}
-  100%{background-size: 20% 50% ,20% 50% ,20% 50% }
+
+.grid > a.item {
+  padding: 1rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: bold;
+  display: flex;
+  border:2px solid var(--text-color);
+  flex-direction: column;
+  color:var(--text-color);
+}
+
+/* Tablet - 2 columns */
+@media (min-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Larger Tablets - 3 columns */
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Desktops - 4 columns */
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.item h1 {
+font-size: 18px;
+  font-weight: 600;
+}
+.item span {
+  font-size: 16px;
+  font-weight: 400;
 }
   </style>
 </head>
@@ -50,32 +73,43 @@
 
 </a>
     </nav>
-    <div class="loader"></div>
+    <div class="loader" style="padding: 1rem;"></div>
 
 <div class="grid">
 </div>
 <script>
+
   const grid = document.querySelector('.grid');
   const loader = document.querySelector('.loader');
 
-  // Fetch the JSON
-  fetch('https://extremekrish.github.io/osho/osho_hindi.json')
-    .then(res => res.json())
+  // Get URL param ?slug=...
+  const urlParams = new URLSearchParams(window.location.search);
+  const slug = urlParams.get('slug');
+
+  if (!slug) {
+    loader.innerText = 'No slug found in URL.';
+    throw new Error('Missing slug param.');
+  }
+
+  // Fetch the JSON using slug
+  fetch(`https://extremekrish.github.io/osho/discourses/${encodeURIComponent(slug)}.json`)
+    .then(res => {
+      if (!res.ok) throw new Error('Fetch failed.');
+      return res.json();
+    })
     .then(data => {
-      // Hide the loader
       loader.style.display = 'none';
 
-      // Loop through the array and render each item
       data.forEach(item => {
         const a = document.createElement('a');
         a.classList.add('item');
-        a.href = `discources.html?slug=${encodeURIComponent(item.slug)}`;
+        a.href = `discourse.html?slug=${encodeURIComponent(item.slug)}`;
 
         const h1 = document.createElement('h1');
         h1.innerText = item.title;
 
         const span = document.createElement('span');
-        span.innerText = `${item.count} Discources`;
+        span.innerText = item.duration;
 
         a.appendChild(h1);
         a.appendChild(span);
@@ -83,8 +117,8 @@
       });
     })
     .catch(err => {
-      loader.innerText = 'Failed to load data.';
-      console.error('Fetch error:', err);
+      loader.innerText = 'Failed to load discourses.';
+      console.error('Error:', err);
     });
 </script>
 
