@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sahitya:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
+
+<title>Discourse</title>
+<link rel="stylesheet" href="style.css" type="text/css" media="all" />
+</head>
+<style>
+    nav{
+        display: flex;
+        background: var(--bg-color);
+        justify-content: space-between;
+        border-bottom: 2px solid;
+        padding: 12px;
+        font-size: 18px;
+        align-items: center;
+    }
+    nav a{
+      font-weight: 500;
+      text-decoration: none;
+      padding: 0;
+    margin: 0;
+    color:var(--text-color);
+    display: flex;
+    }
+    nav svg{
+      height:32px;
+      width:32px ;
+    }
+</style>
+<body>
+    <nav>
+      <a href="index.html">OSHOApp</a>
+    <a href="https://github.com/oshoapp">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5c.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34c-.46-1.16-1.11-1.47-1.11-1.47c-.91-.62.07-.6.07-.6c1 .07 1.53 1.03 1.53 1.03c.87 1.52 2.34 1.07 2.91.83c.09-.65.35-1.09.63-1.34c-2.22-.25-4.55-1.11-4.55-4.92c0-1.11.38-2 1.03-2.71c-.1-.25-.45-1.29.1-2.64c0 0 .84-.27 2.75 1.02c.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02c.55 1.35.2 2.39.1 2.64c.65.71 1.03 1.6 1.03 2.71c0 3.82-2.34 4.66-4.57 4.91c.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"/></svg>
+    </a>
+    </nav>
+    <div class="container">
+
+        <p id="content-paragraph">
+          </p>
+
+        <div id="highlight-toolbar" class="highlight-toolbar">
+            <button id="apply-highlight-btn" class="visible">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20"><path fill="currentColor" d="M4.5 2A1.5 1.5 0 0 0 3 3.5v3A1.5 1.5 0 0 0 4.5 8h11A1.5 1.5 0 0 0 17 6.5v-3A1.5 1.5 0 0 0 15.5 2zM6 11a2 2 0 0 1-2-2h12a2 2 0 0 1-2 2zm0 1h8v1.074a2 2 0 0 1-1.106 1.789l-6.17 3.085A.5.5 0 0 1 6 17.501z"/></svg>
+                
+            </button>
+            <button id="apply-underline-btn" class="visible">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M18 18.5a1.5 1.5 0 0 1 .144 2.993L18 21.5H6a1.5 1.5 0 0 1-.144-2.993L6 18.5zm-1-16a1.5 1.5 0 0 1 1.493 1.356L18.5 4v7a6.5 6.5 0 0 1-12.996.233L5.5 11V4a1.5 1.5 0 0 1 2.993-.144L8.5 4v7a3.5 3.5 0 0 0 6.995.192L15.5 11V4A1.5 1.5 0 0 1 17 2.5"/></g></svg>
+                
+            </button>
+            <button id="copy-btn" class="visible">
+         
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path d="M7 9.667A2.667 2.667 0 0 1 9.667 7h8.666A2.667 2.667 0 0 1 21 9.667v8.666A2.667 2.667 0 0 1 18.333 21H9.667A2.667 2.667 0 0 1 7 18.333z"/><path d="M4.012 16.737A2 2 0 0 1 3 15V5c0-1.1.9-2 2-2h10c.75 0 1.158.385 1.5 1"/></g></svg>
+            </button>
+            
+            <button id="delete-style-btn" class="hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M2.75 6.167c0-.46.345-.834.771-.834h2.665c.529-.015.996-.378 1.176-.916l.03-.095l.115-.372c.07-.228.131-.427.217-.605c.338-.702.964-1.189 1.687-1.314c.184-.031.377-.031.6-.031h3.478c.223 0 .417 0 .6.031c.723.125 1.35.612 1.687 1.314c.086.178.147.377.217.605l.115.372l.03.095c.18.538.74.902 1.27.916h2.57c.427 0 .772.373.772.834S20.405 7 19.979 7H3.52c-.426 0-.771-.373-.771-.833M11.607 22h.787c2.707 0 4.06 0 4.941-.863c.88-.864.97-2.28 1.15-5.111l.26-4.081c.098-1.537.147-2.305-.295-2.792s-1.187-.487-2.679-.487H8.23c-1.491 0-2.237 0-2.679.487s-.392 1.255-.295 2.792l.26 4.08c.18 2.833.27 4.248 1.15 5.112S8.9 22 11.607 22"/></svg>
+                
+            </button>
+            <div class="color-palette" id="color-palette"></div>
+        </div>
+        
+       
+    </div>
+    <div class="fab" onclick="toggleDropdown()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 16 16">
+    <path fill="#fff" fill-rule="evenodd" d="M12 6.5a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3M12 8a3 3 0 1 0-2.905-3.75H1.75a.75.75 0 0 0 0 1.5h7.345A3 3 0 0 0 12 8m-6.5 3a1.5 1.5 0 1 1-3 0a1.5 1.5 0 0 1 3 0m1.405.75A3.001 3.001 0 0 1 1 11a3 3 0 0 1 5.905-.75h7.345a.75.75 0 0 1 0 1.5z" clip-rule="evenodd"/>
+    </svg>
+    </div>
+    <div class="dropdown" id="dropdown">
+    <div class="dropdown-section">
+    <label>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7V5h13v2m-6-2v14m2 0H8m7-6v-1h6v1m-3-1v7m-1 0h2"/></svg>
+    Text Size
+    </label>
+    <div class="button-group">
+    <button onclick="adjustFontSize(1)">+</button>
+    <button onclick="adjustFontSize(-1)">-</button>
+    </div>
+    </div>
+    <div class="dropdown-section">
+    <label>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M10 8h11c.6 0 1-.4 1-1s-.4-1-1-1H10c-.6 0-1 .4-1 1s.4 1 1 1m-4.3 7.3V8.7q.3.3.6.3c.3 0 .5-.1.7-.2c.4-.4.5-1 .1-1.4l-1.7-2C5.2 5.1 5 5 4.7 5s-.6.1-.8.4l-1.7 2c-.3.4-.3 1 .2 1.4c.4.3.9.3 1.3 0v6.6c-.4-.3-.9-.4-1.3 0s-.5 1-.1 1.4l1.7 2c.1.1.4.2.7.2s.6-.1.8-.4l1.7-2c.4-.4.3-1.1-.1-1.4c-.5-.3-1.1-.3-1.4.1M21 11H10c-.6 0-1 .4-1 1s.4 1 1 1h11c.6 0 1-.4 1-1s-.4-1-1-1m0 5H10c-.6 0-1 .4-1 1s.4 1 1 1h11c.6 0 1-.4 1-1s-.4-1-1-1"/></svg>
+    Line Height
+    </label>
+    <div class="button-group">
+    <button onclick="adjustLineHeight(0.1)">+</button>
+    <button onclick="adjustLineHeight(-0.1)">-</button>
+    </div>
+    </div>
+    <div class="dropdown-section">
+    <label>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><g fill="none"><path fill="currentColor" d="M2.75 12A9.25 9.25 0 0 0 12 21.25V2.75A9.25 9.25 0 0 0 2.75 12"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 21.25a9.25 9.25 0 0 0 0-18.5m0 18.5a9.25 9.25 0 0 1 0-18.5m0 18.5V2.75"/></g></svg>
+    Theme
+    </label>
+    <button onclick="toggleTheme()">Toggle Light/Dark</button>
+    </div>
+    <div class="dropdown-section">
+    <label>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M11 21q-3.35 0-5.675-2.325T3 13q0-1.45.475-2.762T4.8 7.888t2.037-1.725T9.426 5.3q.625-.075.975.438t.025 1.062q-.3.5-.363 1.063T10 9q0 2.5 1.75 4.25T16 15q.3 0 .6-.012t.6-.113q.525-.2.938.188t.237.912q-.725 2.35-2.8 3.688T11 21m5.4-12l-.5 1.4q-.1.275-.325.438t-.5.162q-.475 0-.737-.387t-.113-.813l2.55-7.175q.1-.275.35-.45t.55-.175h.65q.3 0 .55.175t.35.45l2.55 7.175q.15.425-.112.813t-.738.387q-.275 0-.5-.162T20.1 10.4L19.6 9zm.45-1.35h2.3L18 4z"/></svg>
+    Night Light
+    </label>
+    <button onclick="toggleNightLight()">Toggle Night Light</button>
+    </div>
+    <div class="dropdown-section">
+    <label>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M21 20h-1V3a1 1 0 0 0-1-1h-3.5a1 1 0 0 0-.86.5L4.43 20H3a1 1 0 0 0 0 2h4a1 1 0 0 0 0-2h-.26l3.5-6H18v6h-1a1 1 0 0 0 0 2h4a1 1 0 0 0 0-2m-3-8h-6.59l4.66-8H18Z" stroke-width="0.5" stroke="currentColor"/></svg>
+    Font
+    </label>
+    <select onchange="changeFont(this.value)">
+    <option value="Sahitya">Sahitya</option>
+    
+    <option value="Poppins">Poppins</option>
+    <option value="Georgia, serif">Georgia</option>
+    <option value="Times New Roman, serif">Times New Roman</option>
+    </select>
+    </div>
+    </div>
+    <script src="settings.js"></script>
+    
+<script>
+
+const slug = new URLSearchParams(window.location.search).get("slug");
+const paragraph = document.getElementById("content-paragraph");
+
+if (!slug) {
+  paragraph.innerHTML = "No Discourse Found";
+} else {
+  // Everything else goes inside this else block
+  const dbName = "OshoDiscourseDB";
+  const storeName = "discourses";
+
+  const openRequest = indexedDB.open(dbName, 1);
+
+  openRequest.onupgradeneeded = function (e) {
+    const db = e.target.result;
+    if (!db.objectStoreNames.contains(storeName)) {
+      db.createObjectStore(storeName, { keyPath: "slug" });
+    }
+  };
+
+  openRequest.onsuccess = function (e) {
+    const db = e.target.result;
+
+    const tx = db.transaction(storeName, "readonly");
+    const store = tx.objectStore(storeName);
+
+    const getRequest = store.get(slug);
+
+    getRequest.onsuccess = function () {
+      const result = getRequest.result;
+      
+      if (result) {
+        document.title = result.title;
+        paragraph.innerHTML = result.description;
+                    applyPreHighlights();
+      } else {
+        fetchAndStoreSlug(db, slug);
+      }
+    };
+
+    getRequest.onerror = function () {
+      paragraph.innerHTML = "Error reading from offline storage.";
+    };
+  };
+
+  openRequest.onerror = function () {
+    paragraph.innerHTML = "Failed to open local database.";
+  };
+
+  function fetchAndStoreSlug(db, slug) {
+    const apiUrl = `https://extremekrish.github.io/osho/discourse/${slug}.json`;
+
+    fetch(apiUrl)
+      .then((res) => {
+        if (!res.ok) throw new Error("Network error");
+        return res.json();
+      })
+      .then((data) => {
+        const description = data.description;
+
+        const tx = db.transaction(storeName, "readwrite");
+        const store = tx.objectStore(storeName);
+        store.put({ slug: slug, description: description });
+
+        paragraph.innerHTML = description;
+                    applyPreHighlights();
+                    document.title = data.title;
+
+      })
+      .catch((err) => {
+        paragraph.innerHTML = "Error fetching content: " + err.message;
+      });
+  }
+}
+
+var fileName = slug;
+
+</script>
+<script src="text-highlighter.js"></script>
+</body>
+</html>
