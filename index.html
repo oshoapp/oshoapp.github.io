@@ -4,7 +4,18 @@
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#F0F5FF">
+<!-- Chrome, Firefox OS and Opera -->
+<meta name="theme-color" content="#F0F5FF" id="meta-theme-color">
+
+<!-- Windows Phone -->
+<meta name="msapplication-navbutton-color" content="#F0F5FF" id="meta-ms-nav-color">
+
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" id="meta-apple-status-style">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<!-- Android Chrome on Lollipop and later -->
+<meta name="mobile-web-app-capable" content="yes">
 <title>OSHOApp – Read & Listen to Osho's Discourses (Hindi & English)</title>
 <meta name="description" content="OSHOApp is a minimal, open-source web app to read and listen to Osho's discourses in Hindi and English. Featuring an advanced reader with distraction-free UI.">
 <meta name="keywords" content="Osho, OSHOApp, Osho discourses, Hindi Osho books, English Osho books, Osho audiobook, Osho quotes, meditation, spiritual books, osho online reading">
@@ -131,7 +142,7 @@
       console.error('Fetch error:', err);
     });
 </script>
-    <script src="settings.js"></script>
+    <script src="settings.js?version=1"></script>
 
 </body>
 </html>

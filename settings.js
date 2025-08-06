@@ -5,6 +5,30 @@
     const body = document.body;
     
     // Load settings from localStorage
+    function setThemeColor(colorHex) {
+    // Chrome, Firefox, Edge
+    let themeColorMeta = document.querySelector('meta[name="theme-color"]');
+    if (!themeColorMeta) {
+      themeColorMeta = document.createElement('meta');
+      themeColorMeta.name = "theme-color";
+      document.head.appendChild(themeColorMeta);
+    }
+    themeColorMeta.setAttribute("content", colorHex);
+
+    // Windows Phone
+    let msNavColorMeta = document.querySelector('meta[name="msapplication-navbutton-color"]');
+    if (!msNavColorMeta) {
+      msNavColorMeta = document.createElement('meta');
+      msNavColorMeta.name = "msapplication-navbutton-color";
+      document.head.appendChild(msNavColorMeta);
+    }
+    msNavColorMeta.setAttribute("content", colorHex);
+
+    // Optional: iOS Safari - limited JS support
+    // This one does NOT update dynamically via JS — added here just for completeness.
+    // iOS needs color to be handled via manifest/splash or native PWA install settings.
+  }
+  
     function loadSettings() {
     const settings = JSON.parse(localStorage.getItem('uiSettings') || '{}');
     fontSize = settings.fontSize || 20;
@@ -22,7 +46,8 @@
     if(theme == ''){
         
     }else{
-        document.querySelector("meta[name='theme-color']").setAttribute("content", "#F0F5FF");
+        //document.querySelector("meta[name='theme-color']").setAttribute("content", "#F0F5FF");
+        setThemeColor("#060A14");
     }
     if (nightLight) {
     body.classList.add('night-light');
@@ -65,8 +90,11 @@
     function toggleTheme() {
     body.classList.toggle('dark-mode');
     if (body.classList.contains('dark-mode')) {
-            document.querySelector("meta[name='theme-color']").setAttribute("content", "#F0F5FF");
+        setThemeColor("#060A14");
     
+        }else{
+                  setThemeColor("#F0F5FF");
+
         }
     saveSettings();
     }
