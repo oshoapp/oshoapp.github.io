@@ -3,17 +3,92 @@
         --bg-color: #ffffff;
         --text-color: #1B1B1B;
         --font-family: Poppins;
+        --normal-font:Poppins;
         --font-size: 18px;
         --line-height: 1.6;
         }
-        
+        body.dark-mode {
+  /* hsl (fallback color) */
+  --bg-dark: hsl(228 79% 2%);
+  --bg: hsl(222 55% 5%);
+  --bg-light: hsl(220 35% 10%);
+  --text: hsl(220 100% 98%);
+  --text-muted: hsl(220 35% 73%);
+  --highlight: hsl(220 20% 42%);
+  --border: hsl(220 26% 31%);
+  --border-muted: hsl(220 37% 20%);
+  --primary: hsl(220 78% 76%);
+  --secondary: hsl(40 53% 60%);
+  --danger: hsl(9 26% 64%);
+  --warning: hsl(52 19% 57%);
+  --success: hsl(146 17% 59%);
+  --info: hsl(217 28% 65%);
+  --bg-read:#000;
+
+  /* oklch */
+  --bg-dark: oklch(0.1 0.025 264);
+  --bg: oklch(0.15 0.025 264);
+  --bg-light: oklch(0.2 0.025 264);
+  --text: oklch(0.96 0.05 264);
+  --text-muted: oklch(0.76 0.05 264);
+  --highlight: oklch(0.5 0.05 264);
+  --border: oklch(0.4 0.05 264);
+  --border-muted: oklch(0.3 0.05 264);
+  --primary: oklch(0.76 0.1 264);
+  --secondary: oklch(0.76 0.1 84);
+  --danger: oklch(0.7 0.05 30);
+  --warning: oklch(0.7 0.05 100);
+  --success: oklch(0.7 0.05 160);
+  --info: oklch(0.7 0.05 260);
+}
+:root {
+  /* hsl (fallback color) */
+  --bg-dark: hsl(220 59% 91%);
+  --bg: hsl(220 100% 97%);
+  --bg-light: hsl(220 100% 100%);
+  --text: hsl(226 85% 7%);
+  --text-muted: hsl(220 26% 31%);
+  --highlight: hsl(220 100% 100%);
+  --border: hsl(220 19% 53%);
+  --border-muted: hsl(220 27% 65%);
+  --primary: hsl(221 49% 33%);
+  --secondary: hsl(44 100% 14%);
+  --danger: hsl(9 21% 41%);
+  --warning: hsl(52 23% 34%);
+  --success: hsl(147 19% 36%);
+  --info: hsl(217 22% 41%);
+  --bg-read:#fff;
+  /* oklch */
+  --bg-dark: oklch(0.92 0.025 264);
+  --bg: oklch(0.96 0.025 264);
+  --bg-light: oklch(1 0.025 264);
+  --text: oklch(0.15 0.05 264);
+  --text-muted: oklch(0.4 0.05 264);
+  --highlight: oklch(1 0.05 264);
+  --border: oklch(0.6 0.05 264);
+  --border-muted: oklch(0.7 0.05 264);
+  --primary: oklch(0.4 0.1 264);
+  --secondary: oklch(0.4 0.1 84);
+  --danger: oklch(0.5 0.05 30);
+  --warning: oklch(0.5 0.05 100);
+  --success: oklch(0.5 0.05 160);
+  --info: oklch(0.5 0.05 260);
+}
+@font-face {
+    font-family: 'AdobeDevnagri';
+    src: url('Adobe Devanagari.otf') format('opentype');
+}
+@font-face {
+    font-family: 'TiffinDevnagri';
+    src: url('Tiffin-Devanagari-Book.otf') format('opentype');
+}
         html{
             margin:0;
             padding: 0;
         }
         body {
         display: flex;
-        align-content: center;
+        align-items: center;
         justify-items: flex-start;
         min-height: 100vh;
         padding: 0;
@@ -21,9 +96,9 @@
         margin: 0;
         -webkit-tap-highlight-color: transparent;
         transition: background-color 0.3s, color 0.3s;
-        background-color: var(--bg-color);
+        background-color: var(--bg-dark);
         color: var(--text-color);
-        font-family: var(--font-family);
+        font-family: var(--normal-font);
         font-size: var(--font-size);
         line-height: var(--line-height);
         transition: all 0.3s ease;
@@ -31,34 +106,43 @@
         width:100vw;
         overflow-x:none ;
         }
+                .dark-mode {
+        --bg-color: #000;
+        --text-color: #cccccc;
+        }
+        
             nav{
         display: flex;
-        background: var(--bg-color);
+        background: var(--bg);
         justify-content: space-between;
-        border-bottom: 2px solid;
-        padding: 12px;
+        border-bottom: 1px solid var(--border);
+        padding: 12px 16px;
+        color:var(--text);
         font-size: 18px;
         align-items: center;
+        width: 100%;
+        box-sizing: border-box;
     }
     nav a{
       font-weight: 500;
       text-decoration: none;
       padding: 0;
     margin: 0;
-    color:var(--text-color);
+        color:var(--text);
     display: flex;
     }
     nav svg{
-      height:32px;
-      width:32px ;
+      height:28px;
+      width:28px ;
     }
 
       
         .container {
             
-            background-color: transparent;
+            background: var(--bg-read);
            padding: 1rem;
                         overflow-x: hidden;
+                        font-family: var(--font-family);
                         
         }
         #content-paragraph{
@@ -312,11 +396,7 @@
         background-position: right 8px center;
         }
         
-        .dark-mode {
-        --bg-color: #000;
-        --text-color: #cccccc;
-        }
-        
+
         .dark-mode .dropdown {
         border-color: #555555;
         }
@@ -365,10 +445,45 @@
   text-decoration: none;
   font-weight: bold;
   display: flex;
-  border:2px solid var(--text-color);
-  flex-direction: column;
-  color:var(--text-color);
+border:1px solid var(--border-muted);
+border-top-color: var(--highlight);
+/*  border:2px solid grey; 
+*/
+background: var(--bg);
+flex-direction: column;
+  color:var(--text);
+  transition: 0.3s;
+ }
+
+.grid > a.item:hover{
+    background: linear-gradient(0deg, var(--bg), var(--bg-light));
 }
+
+    .search {
+        display: flex;
+margin: 16px 16px 0 16px;
+background: var(--bg);
+align-items: center;
+border-radius: 12px;
+border:1px solid var(--border-muted);
+padding-right: 12px;
+border-top-color: var(--highlight);
+color:var(--text);
+    }
+    .search input {
+        flex-grow: 1;
+        outline: none;
+        border: none;
+        background: none;
+        padding:12px 16px;
+        color:var(--text);
+        font-family: var(--normal-font);
+        font-size: 16px;
+    }
+    .search input::placeholder {
+  color:var(--text-muted);
+}
+
 
 /* Tablet - 2 columns */
 @media (min-width: 480px) {
@@ -382,13 +497,22 @@
   .grid {
     grid-template-columns: repeat(3, 1fr);
   }
+  .search {
+      width: 60%;
+  }
 }
 
 /* Desktops - 4 columns */
 @media (min-width: 1024px) {
   .grid {
     grid-template-columns: repeat(4, 1fr);
+ 
+
   }
+    .search {
+      width: 50%;
+  }
+
 }
 .item h1 {
 font-size: 18px;
@@ -396,8 +520,21 @@ font-size: 18px;
 }
 .item span {
   font-size: 16px;
+  color:var(--text-muted);
   font-weight: 400;
+  display: flex;
+  align-items: center;
+}
+.item span a{
+    margin-left: auto;
+    display: flex;
+    color:var(--text-muted);
+    margin-right: 8px;
+}
+.item span svg {
+    height: 22px;
+    width:22px;
+
 }
 /* HTML: <div class="loader"></div> */
 
-    

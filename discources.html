@@ -13,10 +13,10 @@
   <title>OSHOApp</title>
 
   <!-- Custom Styles -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?version=1">
   
   <style>
-.grid {
+/* .grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
@@ -34,21 +34,21 @@
   color:var(--text-color);
 }
 
-/* Tablet - 2 columns */
+Tablet - 2 columns
 @media (min-width: 480px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* Larger Tablets - 3 columns */
+Larger Tablets - 3 columns
 @media (min-width: 768px) {
   .grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-/* Desktops - 4 columns */
+Desktops - 4 columns
 @media (min-width: 1024px) {
   .grid {
     grid-template-columns: repeat(4, 1fr);
@@ -61,7 +61,7 @@ font-size: 18px;
 .item span {
   font-size: 16px;
   font-weight: 400;
-}
+} */
   </style>
 </head>
 
@@ -109,8 +109,8 @@ font-size: 18px;
         h1.innerText = item.title;
 
         const span = document.createElement('span');
-        span.innerText = item.duration;
-
+        span.innerHTML = item.duration + '<a href="https://oshoworld.com' + item.file + '" download><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="m3.25 13.25h9m-8.5-6.5 4 3.5 4-3.5m-4-5v8.5"/></svg></a>';
+        span.innerHTML += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M6.906 4.537A.6.6 0 0 0 6 5.053v13.894a.6.6 0 0 0 .906.516l11.723-6.947a.6.6 0 0 0 0-1.032z"/></svg>';
         a.appendChild(h1);
         a.appendChild(span);
         grid.appendChild(a);
@@ -121,6 +121,7 @@ font-size: 18px;
       console.error('Error:', err);
     });
 </script>
+    <script src="settings.js"></script>
 
 </body>
 </html>

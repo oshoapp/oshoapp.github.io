@@ -13,7 +13,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     
 <title>Discourse</title>
-<link rel="stylesheet" href="style.css" type="text/css" media="all" />
+<link rel="stylesheet" href="style.css?version=1" type="text/css" media="all" />
 </head>
 <style>
     nav{
@@ -119,9 +119,12 @@
     Font
     </label>
     <select onchange="changeFont(this.value)">
+      <option value="Poppins">Poppins</option>
+
     <option value="Sahitya">Sahitya</option>
-    
-    <option value="Poppins">Poppins</option>
+    <option value="AdobeDevnagri">Adobe Devnagri</option>
+    <option value="TiffinDevnagri">Tiffin Devnagri</option>
+
     <option value="Georgia, serif">Georgia</option>
     <option value="Times New Roman, serif">Times New Roman</option>
     </select>
