@@ -88,8 +88,6 @@
         }
         body {
         display: flex;
-        align-items: center;
-        justify-items: flex-start;
         min-height: 100vh;
         padding: 0;
         box-sizing: border-box;
@@ -131,12 +129,38 @@
         color:var(--text);
     display: flex;
     }
+    
     nav svg{
       height:28px;
       width:28px ;
     }
+     nav ul.menu{
+         display: none;
+        padding: 0;
+        margin:0;
+         list-style: none;
+         justify-content: flex-end;
+         width: 100%;
+         align-items: center;
+         gap:32px;
+     }
+     nav li {
+         font-size: 16px;
+        padding: 0;
+          margin:0;
+          display:flex;
+          align-items: center;
+          color:var(--text-muted);
+transition: 0.3s;
+     }
+     nav li a{
+         color: inherit;
 
-      
+     }
+      nav li:hover{
+                   color:var(--text);
+
+      }
         .container {
             
             background: var(--bg-read);
@@ -458,29 +482,41 @@ flex-direction: column;
 .grid > a.item:hover{
     background: linear-gradient(0deg, var(--bg), var(--bg-light));
 }
+.search-container{
+    /* padding:0 16px;
+    display: flex;
+    width:100%; */
+}
+.search {
+    display: flex;
+    margin: 16px 16px 0 16px;
+    background: var(--bg);
+    align-items: center;
+    border-radius: 12px;
+    border: 1px solid var(--border-muted);
+    border-top-color: var(--highlight);
+    color: var(--text);
+    box-sizing: border-box;
+}
 
-    .search {
-        display: flex;
-margin: 16px 16px 0 16px;
-background: var(--bg);
-align-items: center;
-border-radius: 12px;
-border:1px solid var(--border-muted);
-padding-right: 12px;
-border-top-color: var(--highlight);
-color:var(--text);
-    }
-    .search input {
-        flex-grow: 1;
-        outline: none;
-        border: none;
-        background: none;
-        padding:12px 16px;
-        color:var(--text);
-        font-family: var(--normal-font);
-        font-size: 16px;
-    }
-    .search input::placeholder {
+.search input {
+ outline: none;
+box-sizing: border-box;
+border: none;
+padding: 12px 12px 12px 16px;
+color: var(--text);
+font-family: var(--normal-font);
+font-size: 16px;
+background: none;
+    width: 100%;
+} 
+.search svg{
+    height:24px;
+    width:50px;
+    
+}
+
+.search input::placeholder {
   color:var(--text-muted);
 }
 
@@ -490,16 +526,27 @@ color:var(--text);
   .grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  nav ul.menu {
+    display: none;
+}
+  
 }
 
 /* Larger Tablets - 3 columns */
 @media (min-width: 768px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .search {
-      width: 60%;
-  }
+      .grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .search {
+          width: 60%;
+          margin: 16px auto 0 auto;
+      }
+        nav ul.menu {
+        display: flex;
+        }
+        .hamburger{
+            display: none;
+        }
 }
 
 /* Desktops - 4 columns */
@@ -511,6 +558,8 @@ color:var(--text);
   }
     .search {
       width: 50%;
+      margin: 16px auto 0 auto;
+
   }
 
 }
@@ -538,3 +587,92 @@ font-size: 18px;
 }
 /* HTML: <div class="loader"></div> */
 
+.audioPlayer{
+    height: 56px;
+    position: fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    display:none;
+}
+.audioPlayer svg{
+height:32px;
+    width: 32px;
+    color:var(--text);
+}
+.audioPlayer .info {
+    display: flex;
+    flex-direction: column;
+    flex:1;
+    padding: 0 8px;
+}
+.audioPlayer .info marquee{
+    font-weight:500;
+    font-size: 16px;
+}
+
+input[type=range] {
+  -webkit-appearance: none; /* Hides the default styling */
+  width: 100%;
+  height: 8px; /* Height of the track */
+  background: #ccc; /* Background color for the unfilled part */
+  border-radius: 4px; /* Rounded corners for the track */
+  outline: none;
+}
+
+/* Track styling for Firefox */
+input[type=range]::-moz-range-track {
+  height: 8px;
+  background: #ccc;
+  border-radius: 4px;
+}
+
+/* Progress (filled portion) for Webkit browsers */
+input[type=range]::-webkit-slider-runnable-track {
+  height: 8px;
+  background: #ccc;
+  border-radius: 4px;
+}
+
+/* Thumb removal for Webkit */
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 0;
+  height: 0;
+}
+
+/* Thumb removal for Firefox */
+input[type=range]::-moz-range-thumb {
+  width: 0;
+  height: 0;
+  border: none;
+}
+
+/* Progress bar styling */
+input[type=range]::-webkit-progress-value {
+  background: #00bcd4;
+  border-radius: 4px;
+}
+
+/* Filled portion styling for Webkit */
+input[type=range]::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, #00bcd4 var(--fill-percent, 0%), #ccc var(--fill-percent, 0%));
+}
+
+/* Filled portion styling for Firefox */
+input[type=range]::-moz-range-progress {
+  background: #00bcd4;
+  border-radius: 4px;
+  height: 8px;
+}
+
+/* To update the fill percentage dynamically with JavaScript */
+/* You would need to add something like this to your JS:
+document.querySelector('input[type=range]').addEventListener('input', function() {
+  this.style.setProperty('--fill-percent', this.value + '%');
+});
+*/
