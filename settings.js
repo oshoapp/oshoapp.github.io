@@ -19,6 +19,11 @@
     document.documentElement.style.setProperty('--font-family', fontFamily);
     body.classList.remove('dark-mode');
     body.classList.add(theme);
+    if(theme == ''){
+        
+    }else{
+        document.querySelector("meta[name='theme-color']").setAttribute("content", "#F0F5FF");
+    }
     if (nightLight) {
     body.classList.add('night-light');
     dropdown.classList.add('night-light');
@@ -42,6 +47,7 @@
     
     function toggleDropdown() {
     dropdown.classList.toggle('show');
+    
     }
     
     function adjustFontSize(change) {
@@ -58,7 +64,10 @@
     
     function toggleTheme() {
     body.classList.toggle('dark-mode');
+    if (body.classList.contains('dark-mode')) {
+            document.querySelector("meta[name='theme-color']").setAttribute("content", "#F0F5FF");
     
+        }
     saveSettings();
     }
     

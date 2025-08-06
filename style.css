@@ -9,8 +9,8 @@
         }
         body.dark-mode {
   /* hsl (fallback color) */
-  --bg-dark: hsl(228 79% 2%);
-  --bg: hsl(222 55% 5%);
+  --bg-dark: #010309;
+  --bg: #060A14;
   --bg-light: hsl(220 35% 10%);
   --text: hsl(220 100% 98%);
   --text-muted: hsl(220 35% 73%);
@@ -44,7 +44,7 @@
 :root {
   /* hsl (fallback color) */
   --bg-dark: hsl(220 59% 91%);
-  --bg: hsl(220 100% 97%);
+  --bg: #F0F5FF;
   --bg-light: hsl(220 100% 100%);
   --text: hsl(226 85% 7%);
   --text-muted: hsl(220 26% 31%);
@@ -134,6 +134,9 @@
       height:28px;
       width:28px ;
     }
+    .logo svg {
+    margin-right: 8px;
+}
      nav ul.menu{
          display: none;
         padding: 0;
@@ -476,7 +479,7 @@ border-top-color: var(--highlight);
 background: var(--bg);
 flex-direction: column;
   color:var(--text);
-  transition: 0.3s;
+   
  }
 
 .grid > a.item:hover{
@@ -560,6 +563,9 @@ background: none;
       width: 50%;
       margin: 16px auto 0 auto;
 
+  }
+  nav ul.menu{
+      gap:
   }
 
 }
