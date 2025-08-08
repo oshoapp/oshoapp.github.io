@@ -550,7 +550,7 @@ box-sizing: border-box;
     display: none;
 }
   .audioPlayer {
-      width:100%;
+      width:100vw;
   }
 }
 
@@ -570,7 +570,7 @@ box-sizing: border-box;
             display: none;
         }
           .audioPlayer {
-      width:70%;
+      width:70vw;
   }
 }
 
@@ -589,7 +589,7 @@ box-sizing: border-box;
   nav ul.menu{
   }
     .audioPlayer {
-      width:60%;
+      width:60vw;
   }
 
 }
