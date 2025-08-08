@@ -287,7 +287,7 @@ transition: 0.3s;
         /* PREF */
         .fab {
         position: fixed;
-        bottom: 20px;
+        bottom: 65px;
         right: 20px;
         width: 40px;
         height: 40px;
@@ -315,7 +315,7 @@ transition: 0.3s;
         
         .dropdown {
         position: fixed;
-        bottom: 70px;
+        bottom: 120px;
         right: 20px;
         background-color: var(--bg-color);
         border: 1px solid #ccc;
@@ -523,7 +523,24 @@ background: none;
   color:var(--text-muted);
 }
 
-
+.audioPlayer{
+    height: 56px;
+    position: fixed;
+    bottom:0;
+margin:0 auto;
+    right:0;
+    left: 0;
+    backdrop-filter: blur(15px);
+    
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+           border-top: 1px solid var(--border);
+           border-left: 1px solid var(--border);
+           border-right: 1px solid var(--border);
+           border-radius:12px 12px 0 0;
+box-sizing: border-box;
+}
 /* Tablet - 2 columns */
 @media (min-width: 480px) {
   .grid {
@@ -532,7 +549,9 @@ background: none;
   nav ul.menu {
     display: none;
 }
-  
+  .audioPlayer {
+      width:100%;
+  }
 }
 
 /* Larger Tablets - 3 columns */
@@ -550,6 +569,9 @@ background: none;
         .hamburger{
             display: none;
         }
+          .audioPlayer {
+      width:70%;
+  }
 }
 
 /* Desktops - 4 columns */
@@ -565,7 +587,9 @@ background: none;
 
   }
   nav ul.menu{
-      gap:
+  }
+    .audioPlayer {
+      width:60%;
   }
 
 }
@@ -593,22 +617,16 @@ font-size: 18px;
 }
 /* HTML: <div class="loader"></div> */
 
-.audioPlayer{
-    height: 56px;
-    position: fixed;
-    bottom:0;
-    left:0;
-    right:0;
-    backdrop-filter: blur(10px);
-    display: flex;
-    align-items: center;
-    padding: 0 12px;
-    display:none;
-}
+
 .audioPlayer svg{
 height:32px;
     width: 32px;
     color:var(--text);
+}
+.audioPlayer .volume{
+    margin: 0 0 0 8px;
+    height:24px;
+    width: 24px;
 }
 .audioPlayer .info {
     display: flex;
@@ -620,7 +638,17 @@ height:32px;
     font-weight:500;
     font-size: 16px;
 }
-
+.audioPlayer .linearH{
+    align-items: center;
+    display: flex;
+}
+.audioPlayer .linearH span{
+    font-size: 14px;
+    font-weight: 800;
+    display: flex;
+    color: var(--text-muted);
+    font-family: "Google Sans Code", monospace;
+}
 input[type=range] {
   -webkit-appearance: none; /* Hides the default styling */
   width: 100%;
@@ -628,13 +656,14 @@ input[type=range] {
   background: #ccc; /* Background color for the unfilled part */
   border-radius: 4px; /* Rounded corners for the track */
   outline: none;
+  margin:0 8px;
 }
 
 /* Track styling for Firefox */
 input[type=range]::-moz-range-track {
   height: 8px;
   background: #ccc;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 /* Progress (filled portion) for Webkit browsers */
@@ -660,20 +689,44 @@ input[type=range]::-moz-range-thumb {
 
 /* Progress bar styling */
 input[type=range]::-webkit-progress-value {
-  background: #00bcd4;
-  border-radius: 4px;
+  background: var(--text);
+  border-radius: 2px;
 }
 
 /* Filled portion styling for Webkit */
 input[type=range]::-webkit-slider-runnable-track {
-  background: linear-gradient(to right, #00bcd4 var(--fill-percent, 0%), #ccc var(--fill-percent, 0%));
+  background: linear-gradient(to right, var(--text) var(--fill-percent, 0%), var(--border-muted) var(--fill-percent, 0%));
 }
 
 /* Filled portion styling for Firefox */
 input[type=range]::-moz-range-progress {
-  background: #00bcd4;
-  border-radius: 4px;
+  background: var(--text);
+  border-radius: 2px;
   height: 8px;
+
+}
+
+#play , #pause {
+    display: none;
+}
+/* spinner — linear continuous rotation */
+.loadingSvg {
+  display: inline-block;          /* allow transform */
+  transform-origin: 50% 50%;      /* rotate around center */
+  animation: spin-linear 1s linear infinite;
+  will-change: transform;         /* perf hint */
+}
+
+/* keyframes */
+@keyframes spin-linear {
+  from { transform: rotate(0deg);  }
+  to   { transform: rotate(360deg); }
+}
+
+/* optional — stop the spinner by toggling this class */
+.loadingSvg.stopped {
+  animation-play-state: paused;
+  display: none;
 }
 
 /* To update the fill percentage dynamically with JavaScript */

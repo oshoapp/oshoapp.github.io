@@ -34,11 +34,28 @@
 </style>
 <body>
   <div class="audioPlayer">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48"><defs><mask id="ipSPlay0"><g fill="none" stroke-linejoin="round" stroke-width="4.1"><path fill="#fff" stroke="#fff" d="M24 44c11.046 0 20-8.954 20-20S35.046 4 24 4S4 12.954 4 24s8.954 20 20 20Z"/><path fill="#000" stroke="#000" d="M20 24v-6.928l6 3.464L32 24l-6 3.464l-6 3.464z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipSPlay0)"/></svg>
+    <!--these 3 svg are loading, play ,pause (need to show one at a time, initially the loading svg then once loaded then play button & pause when paused-->
+    <svg class="loadingSvg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48" ><defs><mask id="ipSLoadingThree0"><g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.1"><path fill="#fff" stroke="#fff" d="M24 44c11.046 0 20-8.954 20-20S35.046 4 24 4S4 12.954 4 24s8.954 20 20 20"/><path stroke="#000" d="M24 12v3m8.485.515l-2.121 2.121M36 24h-3m-.515 8.485l-2.121-2.121M24 36v-3m-8.485-.515l2.121-2.121M12 24h3m.515-8.485l2.121 2.121"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipSLoadingThree0)"/></svg>
+    <svg id="play" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48"><defs><mask id="ipSPlay0"><g fill="none" stroke-linejoin="round" stroke-width="4.1"><path fill="#fff" stroke="#fff" d="M24 44c11.046 0 20-8.954 20-20S35.046 4 24 4S4 12.954 4 24s8.954 20 20 20Z"/><path fill="#000" stroke="#000" d="M20 24v-6.928l6 3.464L32 24l-6 3.464l-6 3.464z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipSPlay0)"/></svg>
+    <svg id="pause" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48"><defs><mask id="ipSPauseOne0"><g fill="none" stroke-linejoin="round" stroke-width="4.1"><path fill="#fff" stroke="#fff" d="M24 44c11.046 0 20-8.954 20-20S35.046 4 24 4S4 12.954 4 24s8.954 20 20 20Z"/><path stroke="#000" stroke-linecap="round" d="M19 18v12m10-12v12"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipSPauseOne0)"/></svg>
+  
+    <!--speaker icon, volume dropdown will appear to change volume-->
+    <svg class="volume" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 8a5 5 0 0 1 0 8m2.7-11a9 9 0 0 1 0 14M6 15H4a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h2l3.5-4.5A.8.8 0 0 1 11 5v14a.8.8 0 0 1-1.5.5z"/></svg>
+
  <div class="info">
-   <marquee>Mare ho jogi maro</marquee>
-   <input type="range" class="player">
+   <marquee>Loading...</marquee>     <!--title-->
+   <div class="linearH">
+     <span>  <!--current audio listened-->
+       00:00 
+     </span>
+        <input type="range" class="player" value="0">  <!--audio track progress draggable-->
+      <span>
+        00:00  <!--total duration-->
+      </span>
+   </div>
  </div>
+  <!--queue icon to show drop-down of what to play next-->
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 0 1 0 3.75H5.625a1.875 1.875 0 0 1 0-3.75"/></svg>
   </div>
         <nav>
         <a class="logo" href="index.html">
@@ -165,6 +182,7 @@
 
 const slug = new URLSearchParams(window.location.search).get("slug");
 const paragraph = document.getElementById("content-paragraph");
+const audioTitle = document.querySelector('marquee');
 
 if (!slug) {
   paragraph.innerHTML = "No Discourse Found";
@@ -196,7 +214,11 @@ if (!slug) {
       if (result) {
         document.title = result.title;
         paragraph.innerHTML = result.description;
+        audioTitle.innerText = result.title;
+        
                     applyPreHighlights();
+                    initAudioPlayer("https://oshoworld.com" + result.audioFile);
+
       } else {
         fetchAndStoreSlug(db, slug);
       }
@@ -221,14 +243,18 @@ if (!slug) {
       })
       .then((data) => {
         const description = data.description;
+const audioFile = data.audioFile;
 
         const tx = db.transaction(storeName, "readwrite");
         const store = tx.objectStore(storeName);
-        store.put({ slug: slug, description: description });
+        store.put({ slug: slug, description: description, title: data.title, audioFile: data.audioFile});
 
         paragraph.innerHTML = description;
                     applyPreHighlights();
                     document.title = data.title;
+                            audioTitle.innerText = data.title;
+
+initAudioPlayer("https://oshoworld.com" + audioFile);
 
       })
       .catch((err) => {
@@ -239,6 +265,7 @@ if (!slug) {
 
 var fileName = slug;
 
+/*
 document.querySelectorAll('input[type=range]').forEach(input => {
   // Set initial value
   input.style.setProperty('--fill-percent', input.value + '%');
@@ -248,6 +275,65 @@ document.querySelectorAll('input[type=range]').forEach(input => {
     this.style.setProperty('--fill-percent', this.value + '%');
   });
 });
+*/
+// MUSIC PLAYER
+</script>
+
+<script>
+function initAudioPlayer(audioUrl) {
+  const audio = new Audio(audioUrl);
+  audio.preload = "metadata";
+
+  const loadingSvg = document.querySelector(".loadingSvg");
+  const playSvg = document.querySelector("#play");
+  const pauseSvg = document.querySelector("#pause");
+  const range = document.querySelector(".player");
+  const currentTimeEl = document.querySelector(".linearH span:first-child");
+  const durationEl = document.querySelector(".linearH span:last-child");
+
+  playSvg.style.display = "none";
+  pauseSvg.style.display = "none";
+
+  audio.addEventListener("loadeddata", () => {
+    loadingSvg.style.display = "none";
+    playSvg.style.display = "inline";
+    durationEl.textContent = formatTime(audio.duration);
+    range.max = Math.floor(audio.duration);
+  });
+
+  playSvg.addEventListener("click", () => audio.play());
+  pauseSvg.addEventListener("click", () => audio.pause());
+
+  audio.addEventListener("play", () => {
+    playSvg.style.display = "none";
+    pauseSvg.style.display = "inline";
+  });
+
+  audio.addEventListener("pause", () => {
+    pauseSvg.style.display = "none";
+    playSvg.style.display = "inline";
+  });
+
+  audio.addEventListener("timeupdate", () => {
+    range.value = Math.floor(audio.currentTime);
+    currentTimeEl.textContent = formatTime(audio.currentTime);
+    range.style.setProperty('--fill-percent', (audio.currentTime / audio.duration) * 100 + '%');
+  });
+
+  range.addEventListener("input", () => {
+    audio.currentTime = range.value;
+  });
+
+  function formatTime(sec) {
+    let minutes = Math.floor(sec / 60) || 0;
+    let seconds = Math.floor(sec % 60) || 0;
+    return `${String(minutes).padStart(2,"0")}:${String(seconds).padStart(2,"0")}`;
+  }
+
+  return audio; // so you can control it outside if needed
+}
+
+// Example usage:
 </script>
 <script src="text-highlighter.js"></script>
 </body>
