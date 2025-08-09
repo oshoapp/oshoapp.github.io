@@ -531,7 +531,7 @@ margin:0 auto;
     right:0;
     left: 0;
     backdrop-filter: blur(15px);
-    max-width: 100vw;
+    max-width: 100%;
     display: flex;
     align-items: center;
     padding: 0 12px;
@@ -550,7 +550,8 @@ box-sizing: border-box;
     display: none;
 }
   .audioPlayer {
-      width:100vw;
+      width:100%;
+     
   }
 }
 
@@ -570,7 +571,7 @@ box-sizing: border-box;
             display: none;
         }
           .audioPlayer {
-      width:70vw;
+      width:70%;
   }
 }
 
@@ -589,7 +590,7 @@ box-sizing: border-box;
   nav ul.menu{
   }
     .audioPlayer {
-      width:60vw;
+      width:60%;
   }
 
 }
