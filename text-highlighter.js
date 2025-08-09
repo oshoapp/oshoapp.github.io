@@ -2,16 +2,19 @@
     
     
 
-    const colors = ['#fde047', '#a7f3d0', '#bfdbfe', '#fecaca', '#dbeafe', '#fbcfe8'];
-    let selectedColor = colors[0];
-    let currentActiveStyledElement = null;
-    const highlightsMap = new Map();
-    const storedHighlightObj = {};
-    
-   const preHighlights = loadHighlightsFromStorage(fileName);
+const colors = ['#fde047', '#a7f3d0', '#bfdbfe', '#fecaca', '#dbeafe', '#fbcfe8'];
+let selectedColor = colors[0];
+let currentActiveStyledElement = null;
+const highlightsMap = new Map();
+const storedHighlightObj = {};
+
+const preHighlights = loadHighlightsFromStorage(fileName);
+
+const padding = 16;
+const paddingV = 72; //56 + 16
    
    
-    const contentParagraph = document.getElementById('content-paragraph');
+const contentParagraph = document.getElementById('content-paragraph');
 const highlightToolbar = document.getElementById('highlight-toolbar');
 const applyHighlightBtn = document.getElementById('apply-highlight-btn');
 const copyBtn = document.getElementById('copy-btn');
@@ -20,129 +23,129 @@ const applyUnderlineBtn = document.getElementById('apply-underline-btn');
 const deleteStyleBtn = document.getElementById('delete-style-btn');
 const colorPalette = document.getElementById('color-palette');
 
+let windowWidth = document.documentElement.clientWidth;
 
 
-    function populateColorPalette() {
-        colorPalette.innerHTML = ''; // clear previous palette
+
+function populateColorPalette() {
+    colorPalette.innerHTML = ''; // clear previous palette
+    
+    colors.forEach(color => {
+        const colorOption = document.createElement('div');
+        colorOption.classList.add('color-option');
+        colorOption.style.backgroundColor = color;
+        colorOption.dataset.color = color;
+        colorOption.addEventListener('click', () => {
+            selectedColor = color;
+            document.querySelectorAll('.color-option').forEach(opt => opt.style.borderColor = 'transparent');
+            colorOption.style.borderColor = '#fff';
+    
+            if (currentActiveStyledElement) {
+                const type = currentActiveStyledElement.dataset.styleType;
+                if (type === 'highlight') {
+                    currentActiveStyledElement.style.backgroundColor = selectedColor;
         
-        colors.forEach(color => {
-            const colorOption = document.createElement('div');
-            colorOption.classList.add('color-option');
-            colorOption.style.backgroundColor = color;
-            colorOption.dataset.color = color;
-            colorOption.addEventListener('click', () => {
-                selectedColor = color;
-                document.querySelectorAll('.color-option').forEach(opt => opt.style.borderColor = 'transparent');
-                colorOption.style.borderColor = '#fff';
+                    // 🔥 Add this block to ensure text color adjusts for highlight
+                    const rgb = getRGB(selectedColor);
+                    const luminance = getLuminance(rgb.r, rgb.g, rgb.b);
+                    currentActiveStyledElement.style.color = luminance < 0.5 ? '#fff' : '#000';
         
-                if (currentActiveStyledElement) {
-                    const type = currentActiveStyledElement.dataset.styleType;
-                    if (type === 'highlight') {
-                        currentActiveStyledElement.style.backgroundColor = selectedColor;
-            
-                        // 🔥 Add this block to ensure text color adjusts for highlight
-                        const rgb = getRGB(selectedColor);
-                        const luminance = getLuminance(rgb.r, rgb.g, rgb.b);
-                        currentActiveStyledElement.style.color = luminance < 0.5 ? '#fff' : '#000';
-            
-                    } else if (type === 'underline') {
-                        currentActiveStyledElement.style.textDecorationColor = selectedColor;
-                        // leave text color unchanged
-                    }
-            
-                    currentActiveStyledElement.dataset.color = selectedColor;
-                    highlightsMap.set(currentActiveStyledElement.dataset.id, {
-                        text: currentActiveStyledElement.textContent,
-                        color: selectedColor,
-                        styleType: type
-                        //startOffset: getNodeOffset(currentActiveStyledElement),
-                        //endOffset: getNodeOffset(currentActiveStyledElement) + currentActiveStyledElement.textContent.length
-                    });
-                    saveHighlightsToStorage(highlightsMap);
+                } else if (type === 'underline') {
+                    currentActiveStyledElement.style.textDecorationColor = selectedColor;
+                    // leave text color unchanged
                 }
-            });
-            
-            colorPalette.appendChild(colorOption);
-            Coloris({
-              themeMode: 'dark',
-              alpha: false,
-              clearButton: false,
-              closeButton: false
-            });
-        });
         
-        // Add the color picker at the end
-        const pickerDiv = document.createElement('div');
-        pickerDiv.classList.add('color-option', 'picker');
-        pickerDiv.innerHTML = '<input type="text" class="picker-input" data-coloris>';
-        colorPalette.appendChild(pickerDiv);
-        const pickerInput = document.querySelector('.picker-input');
-        
-        let lastColorUsed = '';
-    
-        pickerInput.addEventListener('input', (e) => {
-            const liveColor = e.target.value;
-            lastColorUsed = liveColor;
-            selectedColor = liveColor; // 🔥 important to apply in next highlight
-            applyColorToSelection(liveColor);
-        });
-    
-        pickerInput.addEventListener('change', (e) => {
-            const finalColor = e.target.value;
-            selectedColor = finalColor;
-            
-            if (!colors.includes(finalColor)) {
-                colors.unshift(finalColor);
-                if (colors.length > 6) colors.pop();
-                populateColorPalette();
+                currentActiveStyledElement.dataset.color = selectedColor;
+                highlightsMap.set(currentActiveStyledElement.dataset.id, {
+                    text: currentActiveStyledElement.textContent,
+                    color: selectedColor,
+                    styleType: type
+                    //startOffset: getNodeOffset(currentActiveStyledElement),
+                    //endOffset: getNodeOffset(currentActiveStyledElement) + currentActiveStyledElement.textContent.length
+                });
+                saveHighlightsToStorage(highlightsMap);
             }
         });
-    
-        pickerInput.addEventListener('blur', () => {
-            if (!colors.includes(lastColorUsed)) {
-                colors.unshift(lastColorUsed);
-                if (colors.length > 6) colors.pop();
-                populateColorPalette(); // re-render
-            }
+        
+        colorPalette.appendChild(colorOption);
+        Coloris({
+          themeMode: 'dark',
+          alpha: false,
+          clearButton: false,
+          closeButton: false
         });
+    });
     
-        const initialSelectedOption = document.querySelector(`.color-option[data-color="${selectedColor}"]`);
-        if (initialSelectedOption) initialSelectedOption.style.borderColor = '#fff';
-    }
+    // Add the color picker at the end
+    const pickerDiv = document.createElement('div');
+    pickerDiv.classList.add('color-option', 'picker');
+    pickerDiv.innerHTML = '<input type="text" class="picker-input" data-coloris>';
+    colorPalette.appendChild(pickerDiv);
+    const pickerInput = document.querySelector('.picker-input');
+    
+    let lastColorUsed = '';
 
-    function getNodeOffset(node) {
-        let offset = 0;
-        let current = node;
-        while (current.previousSibling) {
-            current = current.previousSibling;
-            if (current.nodeType === Node.TEXT_NODE) {
-                offset += current.textContent.length;
-            } else if (current.nodeType === Node.ELEMENT_NODE) {
-                offset += current.textContent.length;
-            }
+    pickerInput.addEventListener('input', (e) => {
+        const liveColor = e.target.value;
+        lastColorUsed = liveColor;
+        selectedColor = liveColor; // 🔥 important to apply in next highlight
+        applyColorToSelection(liveColor);
+    });
+
+    pickerInput.addEventListener('change', (e) => {
+        const finalColor = e.target.value;
+        selectedColor = finalColor;
+        
+        if (!colors.includes(finalColor)) {
+            colors.unshift(finalColor);
+            if (colors.length > 6) colors.pop();
+            populateColorPalette();
         }
-        return offset;
-    }
-    
-    function loadHighlightsFromStorage() {
-      const stored = localStorage.getItem(fileName);
-      if (!stored) return [];
-    
-      const storedHighlightObj = JSON.parse(stored);
-      return Object.entries(storedHighlightObj).map(([id, data]) => ({
-        ...data,
-        id
-      }));
-    }
-    
-    function saveHighlightsToStorage(highlightsMap) {
-        const objToStore = Object.fromEntries(highlightsMap);
-        localStorage.setItem(fileName, JSON.stringify(objToStore));
-        console.log(JSON.stringify(Object.fromEntries(highlightsMap), null, 2));
+    });
 
+    pickerInput.addEventListener('blur', () => {
+        if (!colors.includes(lastColorUsed)) {
+            colors.unshift(lastColorUsed);
+            if (colors.length > 6) colors.pop();
+            populateColorPalette(); // re-render
+        }
+    });
+
+    const initialSelectedOption = document.querySelector(`.color-option[data-color="${selectedColor}"]`);
+    if (initialSelectedOption) initialSelectedOption.style.borderColor = '#fff';
+}
+
+function getNodeOffset(node) {
+    let offset = 0;
+    let current = node;
+    while (current.previousSibling) {
+        current = current.previousSibling;
+        if (current.nodeType === Node.TEXT_NODE) {
+            offset += current.textContent.length;
+        } else if (current.nodeType === Node.ELEMENT_NODE) {
+            offset += current.textContent.length;
+        }
     }
+    return offset;
+}
+    
+function loadHighlightsFromStorage() {
+  const stored = localStorage.getItem(fileName);
+  if (!stored) return [];
 
+  const storedHighlightObj = JSON.parse(stored);
+  return Object.entries(storedHighlightObj).map(([id, data]) => ({
+    ...data,
+    id
+  }));
+}
+    
+function saveHighlightsToStorage(highlightsMap) {
+    const objToStore = Object.fromEntries(highlightsMap);
+    localStorage.setItem(fileName, JSON.stringify(objToStore));
+   // console.log(JSON.stringify(Object.fromEntries(highlightsMap), null, 2));
 
+}
 
     function applyPreHighlights() {
         const text = contentParagraph.textContent;
@@ -347,17 +350,22 @@ saveHighlightsToStorage(highlightsMap);
         const containerRect = contentParagraph.getBoundingClientRect();
         const windowWidth = window.innerWidth;
         const windowHeight = window.innerHeight;
-        const padding = 16;
-    const paddingV = 56 + 16;
+        
+        
         // X-axis positioning
-        let toolbarLeft = x - (toolbarWidth / 2);
     
+        let toolbarLeft = x - (toolbarWidth / 2);
+
         toolbarLeft = Math.max(padding, Math.min(toolbarLeft, windowWidth - toolbarWidth - padding));
     
         toolbarLeft -= containerRect.left;
+        
+        
+
+        //console.log("X is :" + x + "\nToolbar Width is " + toolbarWidth + "\ntoolbarleft gonna : " + toolbarLeft + "\nwindow width: " + windowWidth);
 
         // Y-axis positioning
-        let toolbarTop = rect.top - containerRect.top - toolbarHeight - paddingV;
+        let toolbarTop = rect.top - containerRect.top - toolbarHeight + 32;
         if (toolbarTop < paddingV - containerRect.top) {
             //niche jao
             toolbarTop = rect.bottom - containerRect.top + paddingV + 24;
@@ -389,7 +397,6 @@ saveHighlightsToStorage(highlightsMap);
         colorPalette.classList.toggle('hidden', !isEditMode);
         colorPalette.classList.toggle('visible', isEditMode);
     }
-
 
     function hideToolbar() {
         highlightToolbar.classList.remove('visible');
@@ -533,7 +540,9 @@ saveHighlightsToStorage(highlightsMap);
         dragOffsetY = e.clientY - rect.top;
     });
 
-    document.addEventListener('mousemove', (e) => {
+/*    
+// 1st working void
+document.addEventListener('mousemove', (e) => {
         if (!isDragging) return;
         e.preventDefault();
         const containerRect = contentParagraph.getBoundingClientRect();
@@ -541,91 +550,164 @@ saveHighlightsToStorage(highlightsMap);
         const windowHeight = window.innerHeight;
         const toolbarWidth = highlightToolbar.offsetWidth;
         const toolbarHeight = highlightToolbar.offsetHeight;
-        const padding = 15;
+        
 
         let newLeft = e.clientX - dragOffsetX - containerRect.left;
         let newTop = e.clientY - dragOffsetY - containerRect.top;
 
         newLeft = Math.max(padding, Math.min(newLeft, windowWidth - toolbarWidth - padding - containerRect.left));
-        newTop = Math.max(padding - containerRect.top, Math.min(newTop, windowHeight - toolbarHeight - padding - containerRect.top));
+        newTop = Math.max(paddingV - containerRect.top, Math.min(newTop, windowHeight - toolbarHeight - paddingV - containerRect.top));
 
         highlightToolbar.style.left = `${newLeft}px`;
         highlightToolbar.style.top = `${newTop}px`;
-    });
+    }); 
 
-    document.addEventListener('mouseup', () => {
-        isDragging = false;
-    });
+// 2nd by chatgpt , can be deleted
 
-    highlightToolbar.addEventListener('touchstart', (e) => {
-        if (e.target.closest('button, .color-option')) return;
-        e.preventDefault();
-        isDragging = true;
-        const touch = e.touches[0];
-        const rect = highlightToolbar.getBoundingClientRect();
-        dragOffsetX = touch.clientX - rect.left;
-        dragOffsetY = touch.clientY - rect.top;
-    });
+document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
 
-    document.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
-        const touch = e.touches[0];
-        const containerRect = contentParagraph.getBoundingClientRect();
-        const windowWidth = window.innerWidth;
-        const windowHeight = window.innerHeight;
-        const toolbarWidth = highlightToolbar.offsetWidth;
-        const toolbarHeight = highlightToolbar.offsetHeight;
-        const padding = 15;
+    const containerRect = contentParagraph.getBoundingClientRect();
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const toolbarWidth = highlightToolbar.offsetWidth;
+    const toolbarHeight = highlightToolbar.offsetHeight;
 
-        let newLeft = touch.clientX - dragOffsetX - containerRect.left;
-        let newTop = touch.clientY - dragOffsetY - containerRect.top;
+    // Calculate raw position from drag
+    let newLeft = e.clientX - dragOffsetX - containerRect.left;
+    let newTop = e.clientY - dragOffsetY - containerRect.top;
 
-        newLeft = Math.max(padding, Math.min(newLeft, windowWidth - toolbarWidth - padding - containerRect.left));
-        newTop = Math.max(padding - containerRect.top, Math.min(newTop, windowHeight - toolbarHeight - padding - containerRect.top));
+    // === X-axis constraint (same logic as showToolbar) ===
+    const maxLeft = windowWidth - toolbarWidth - padding;
+    newLeft = Math.max(
+        padding - containerRect.left,
+        Math.min(newLeft, maxLeft - containerRect.left)
+    );
 
-        highlightToolbar.style.left = `${newLeft}px`;
-        highlightToolbar.style.top = `${newTop}px`;
-    });
+    // === Y-axis constraint (mirroring showToolbar bounds) ===
+    const minTop = paddingV - containerRect.top; // Top limit
+    const maxTop = windowHeight - toolbarHeight - paddingV - containerRect.top; // Bottom limit
+    newTop = Math.max(minTop, Math.min(newTop, maxTop));
 
-    document.addEventListener('touchend', () => {
-        isDragging = false;
-    });
+    // Apply position
+    highlightToolbar.style.left = `${newLeft}px`;
+    highlightToolbar.style.top = `${newTop}px`;
+});
+*/
+//3rd by chatgpt>>>
 
-    populateColorPalette();
-    applyPreHighlights();
+document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
 
-    contentParagraph.addEventListener('mouseup', handleSelection);
-    contentParagraph.addEventListener('touchend', handleSelection);
-    contentParagraph.addEventListener('contextmenu', (event) => {
-        event.preventDefault();
-        handleSelection(event);
-    });
+    const viewportWidth = document.documentElement.clientWidth;
+    const viewportHeight = document.documentElement.clientHeight;
+    const toolbarWidth = highlightToolbar.getBoundingClientRect().width;
+    const toolbarHeight = highlightToolbar.getBoundingClientRect().height;
 
-    contentParagraph.addEventListener('click', (e) => {
-        let target = e.target;
-        while (target && target !== contentParagraph && !target.classList.contains('highlighted') && !target.classList.contains('underlined')) {
-            target = target.parentNode;
+    let newLeft = e.clientX - dragOffsetX; // no containerRect.left subtraction
+    let newTop = e.clientY - dragOffsetY;  // no containerRect.top subtraction
+
+    const minLeft = padding;
+    const maxLeft = viewportWidth - toolbarWidth - padding;
+    newLeft = Math.max(minLeft, Math.min(newLeft, maxLeft));
+
+    const minTop = paddingV;
+    const maxTop = viewportHeight - toolbarHeight - paddingV;
+    newTop = Math.max(minTop, Math.min(newTop, maxTop));
+
+    highlightToolbar.style.left = `${newLeft}px`;
+    highlightToolbar.style.top = `${newTop}px`;
+});
+
+
+
+
+
+document.addEventListener('mouseup', () => {
+    isDragging = false;
+});
+    
+
+highlightToolbar.addEventListener('touchstart', (e) => {
+    if (e.target.closest('button, .color-option')) return;
+    e.preventDefault();
+    isDragging = true;
+
+    const touch = e.touches[0];
+    const rect = highlightToolbar.getBoundingClientRect();
+    dragOffsetX = touch.clientX - rect.left;
+    dragOffsetY = touch.clientY - rect.top;
+});
+
+document.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+
+    const touch = e.touches[0];
+    const viewportWidth = document.documentElement.clientWidth;
+    const viewportHeight = document.documentElement.clientHeight;
+    const toolbarWidth = highlightToolbar.getBoundingClientRect().width;
+    const toolbarHeight = highlightToolbar.getBoundingClientRect().height;
+
+    let newLeft = touch.clientX - dragOffsetX;
+    let newTop = touch.clientY - dragOffsetY;
+
+    const minLeft = padding;
+    const maxLeft = viewportWidth - toolbarWidth - padding;
+    newLeft = Math.max(minLeft, Math.min(newLeft, maxLeft));
+
+    const minTop = paddingV;
+    const maxTop = viewportHeight - toolbarHeight - paddingV;
+    newTop = Math.max(minTop, Math.min(newTop, maxTop));
+
+    highlightToolbar.style.left = `${newLeft}px`;
+    highlightToolbar.style.top = `${newTop}px`;
+});
+
+
+document.addEventListener('touchend', () => {
+    isDragging = false;
+});
+
+populateColorPalette();
+applyPreHighlights();
+
+contentParagraph.addEventListener('mouseup', handleSelection);
+contentParagraph.addEventListener('touchend', handleSelection);
+contentParagraph.addEventListener('contextmenu', (event) => {
+    event.preventDefault();
+    handleSelection(event);
+});
+
+//When container text is clicked (either annoted or if normal then hide toolbar if visible)
+contentParagraph.addEventListener('click', (e) => {
+    let target = e.target;
+    while (target && target !== contentParagraph && !target.classList.contains('highlighted') && !target.classList.contains('underlined')) {
+        target = target.parentNode;
+    }
+    if (target && (target.classList.contains('highlighted') || target.classList.contains('underlined'))) {
+        if (currentActiveStyledElement && currentActiveStyledElement !== target) {
+            currentActiveStyledElement.classList.remove('active');
         }
-        if (target && (target.classList.contains('highlighted') || target.classList.contains('underlined'))) {
-            if (currentActiveStyledElement && currentActiveStyledElement !== target) {
-                currentActiveStyledElement.classList.remove('active');
-            }
-            currentActiveStyledElement = target;
-            currentActiveStyledElement.classList.add('active');
-            window.getSelection().removeAllRanges();
-            showToolbar(currentActiveStyledElement, true);
-        } else {
-            hideToolbar();
-        }
-    });
+        currentActiveStyledElement = target;
+        currentActiveStyledElement.classList.add('active');
+        window.getSelection().removeAllRanges();
+        showToolbar(currentActiveStyledElement, true);
+    } else {
+        hideToolbar();
+    }
+});
 
-    highlightToolbar.addEventListener('mousedown', (e) => {
-        if (e.target.closest('button, .color-option')) e.preventDefault();
-    });
+highlightToolbar.addEventListener('mousedown', (e) => {
+    if (e.target.closest('button, .color-option')) e.preventDefault();
+});
 
-    applyHighlightBtn.addEventListener('click', () => applyStyle('highlight'));
-    copyBtn.addEventListener('click', () => {
+//highlight button
+applyHighlightBtn.addEventListener('click', () => applyStyle('highlight'));
+//copy button
+copyBtn.addEventListener('click', () => {
     const selection = window.getSelection();
     const selectedText = selection.toString();
 
@@ -644,39 +726,41 @@ saveHighlightsToStorage(highlightsMap);
     selection.removeAllRanges();
     hideToolbar();
 });
+// underline button
+applyUnderlineBtn.addEventListener('click', () => applyStyle('underline'));
+//delete button
+deleteStyleBtn.addEventListener('click', deleteStyle);
 
-        applyUnderlineBtn.addEventListener('click', () => applyStyle('underline'));
-        deleteStyleBtn.addEventListener('click', deleteStyle);
-
-        window.addEventListener('resize', () => {
-            if (highlightToolbar.classList.contains('visible')) {
-                if (currentActiveStyledElement) {
-                    showToolbar(currentActiveStyledElement, true);
-                } else {
-                    const range = getSelectionRange();
-                    if (range) showToolbar(range, false);
-                    else hideToolbar();
-                }
-            }
-        });
+// Re-show Toolbar if window resized
+window.addEventListener('resize', () => {
+    if (highlightToolbar.classList.contains('visible')) {
+        if (currentActiveStyledElement) {
+            showToolbar(currentActiveStyledElement, true);
+        } else {
+            const range = getSelectionRange();
+            if (range) showToolbar(range, false);
+            else hideToolbar();
+        }
+    }
+});
+// Keyboard Shortcuts
+document.addEventListener('keydown', function(e) {
+    // CTRL + U
+    if (e.ctrlKey && e.key.toLowerCase() === 'u') {
+        e.preventDefault(); // stop browser default action
+        applyStyle('underline');
+        // Your custom function here
+    }
+    
+    // DELETE
+    if (e.key === 'Delete') {
+        deleteStyle();
         
-        document.addEventListener('keydown', function(e) {
-            // CTRL + U
-            if (e.ctrlKey && e.key.toLowerCase() === 'u') {
-                e.preventDefault(); // stop browser default action
-                applyStyle('underline');
-                // Your custom function here
-            }
-            
-            // DELETE
-            if (e.key === 'Delete') {
-                deleteStyle();
-                
-            }
-            
-            // CTRL + SPACE
-            if (e.ctrlKey && e.code === 'Space') {
-                e.preventDefault();
-                applyStyle('highlight');
-            }
-        });
+    }
+    
+    // CTRL + SPACE
+    if (e.ctrlKey && e.code === 'Space') {
+        e.preventDefault();
+        applyStyle('highlight');
+    }
+});

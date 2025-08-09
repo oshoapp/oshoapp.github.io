@@ -102,9 +102,16 @@
         transition: all 0.3s ease;
         flex-direction: column;
         width:100vw;
-        overflow-x:none ;
+        overflow-x:hidden ;
+      
         }
-                .dark-mode {
+        
+        html,
+body {
+    overflow-x: hidden;
+}
+
+        .dark-mode {
         --bg-color: #000;
         --text-color: #cccccc;
         }
@@ -165,7 +172,8 @@ transition: 0.3s;
 
       }
         .container {
-            
+            height: 100vh;
+          
             background: var(--bg-read);
            padding: 1rem;
                         overflow-x: hidden;
@@ -176,7 +184,7 @@ transition: 0.3s;
             margin:0; 
         }
         .highlight-toolbar {
-            position: absolute;
+            position: fixed;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -191,6 +199,7 @@ transition: 0.3s;
             z-index: 1000;
             cursor: move;
             user-select: none;
+            max-width: 305px;
         }
 
         .highlight-toolbar.visible {

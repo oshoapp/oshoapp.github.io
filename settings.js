@@ -42,10 +42,11 @@
     document.documentElement.style.setProperty('--line-height', lineHeight);
     document.documentElement.style.setProperty('--font-family', fontFamily);
     body.classList.remove('dark-mode');
-    body.classList.add(theme);
     if(theme == ''){
         
     }else{
+      body.classList.add(theme);
+
         //document.querySelector("meta[name='theme-color']").setAttribute("content", "#F0F5FF");
         setThemeColor("#060A14");
     }
