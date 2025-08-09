@@ -115,13 +115,16 @@
   const grid = document.querySelector('.grid');
   const loader = document.querySelector('.loader');
   const searchInput = document.getElementById('searchInput');
-  let allData = []; // store all fetched data for filtering
+  let allData = []; // combined hindi + english
 
-  // Fetch the JSON
-  fetch('https://extremekrish.github.io/osho/osho_hindi.json')
-    .then(res => res.json())
-    .then(data => {
-      allData = data; // store for later search
+  // Fetch both JSON files
+  Promise.all([
+    fetch('https://extremekrish.github.io/osho/osho_hindi.json').then(res => res.json()),
+    fetch('https://extremekrish.github.io/osho/osho_english.json').then(res => res.json())
+  ])
+    .then(([hindiData, englishData]) => {
+      // merge arrays
+      allData = [...hindiData, ...englishData];
       loader.style.display = 'none';
       renderItems(allData);
     })
@@ -159,6 +162,7 @@
     renderItems(filtered);
   });
 </script>
+
     <script src="settings.js?version=1"></script>
 
 </body>
