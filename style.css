@@ -107,7 +107,7 @@
         }
         
         html,
-body {
+body, .container {
     overflow-x: hidden;
 }
 
@@ -179,12 +179,13 @@ transition: 0.3s;
                         overflow-x: hidden;
                         font-family: var(--font-family);
                         
+                        
         }
         #content-paragraph{
             margin:0; 
         }
         .highlight-toolbar {
-            position: fixed;
+            position: absolute;
             display: flex;
             align-items: center;
             gap: 0.5rem;
