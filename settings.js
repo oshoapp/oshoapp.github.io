@@ -111,8 +111,4 @@
     saveSettings();
     }
     
-    document.addEventListener('click', (event) => {
-    if (!dropdown.contains(event.target) && !event.target.closest('.fab')) {
-    dropdown.classList.remove('show');
-    }
-    });
+   

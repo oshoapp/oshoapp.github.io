@@ -28,9 +28,6 @@
 <title>Discourse</title>
 <link rel="stylesheet" href="style.css?version=2" type="text/css" media="all" />
 
-
-<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-<script>eruda.init();</script>
 </head>
 <style>
     
@@ -340,6 +337,13 @@ function initAudioPlayer(audioUrl) {
   return audio; // so you can control it outside if needed
 }
 
+
+
+ document.addEventListener('click', (event) => {
+   if (!dropdown.contains(event.target) && !event.target.closest('.fab')) {
+     dropdown.classList.remove('show');
+   }
+ });
 // Example usage:
 </script>
 <script src="text-highlighter.js"></script>
