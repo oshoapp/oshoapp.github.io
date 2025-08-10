@@ -88,7 +88,7 @@
         }
         body {
         display: flex;
-        min-height: 100vh;
+        
         padding: 0;
         box-sizing: border-box;
         margin: 0;
@@ -103,6 +103,7 @@
         flex-direction: column;
         width:100vw;
         overflow-x:hidden ;
+        
       
         }
         
@@ -172,7 +173,7 @@ transition: 0.3s;
 
       }
         .container {
-            height: 100vh;
+            
           
             background: var(--bg-read);
            padding: 1rem;
@@ -426,6 +427,22 @@ transition: 0.3s;
         transform: translateY(0);
         }
         
+        .dropdown .x-buttons{
+            display: flex;
+            gap:8px;
+        }
+        .dropdown .x-buttons button{
+            padding:0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+}
+
+        .dropdown .x-buttons button svg {
+    padding: 0;
+    margin: 0;
+}
         .dropdown select {
         appearance: none;
         background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24"><path fill="%23333" d="M7 10l5 5 5-5H7z"/></svg>');
