@@ -1,12 +1,12 @@
     
-        :root {
-        --bg-color: #ffffff;
-        --text-color: #1B1B1B;
-        --font-family: Poppins;
-        --normal-font:Poppins;
-        --font-size: 18px;
-        --line-height: 1.6;
-        }
+:root {
+--bg-color: #ffffff;
+--text-color: #1B1B1B;
+--font-family: Poppins;
+--normal-font:Poppins;
+--font-size: 18px;
+--line-height: 1.6;
+}
         body.dark-mode {
   /* hsl (fallback color) */
   --bg-dark: #010309;
@@ -572,6 +572,59 @@ box-sizing: border-box;
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; 
 }
+
+.list {
+    display:flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap:1rem;
+}
+
+.list a {
+    color:var(--text);
+    text-decoration: auto;
+    padding: 0;
+    border-radius: 12px;
+      display: flex;
+    border:1px solid var(--border-muted);
+    border-top-color: var(--highlight);
+/*  border:2px solid grey; 
+*/
+background: var(--bg);
+flex-direction: column;
+  color:var(--text);
+   
+}
+
+.list a label {
+    border-bottom:1px solid var(--border);
+    padding: 8px 16px;
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: underline;
+    color:var(--primary);
+    background: var(--bg-light);
+    border-radius: 13px 13px 0 0;
+
+}
+.list a span {
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 8px 16px;
+    max-height: 10rem;
+    overflow: hidden scroll;
+}
+.list a span b{
+background: var(--text);
+color:var(--bg);
+    font-weight: 500;
+}
+
+#plusTen , #minusTen {
+      display: none;
+  }
+  
 /* Tablet - 2 columns */
 @media (min-width: 480px) {
   .grid {
@@ -613,6 +666,11 @@ box-sizing: border-box;
       width:24px;
       margin-left: 8px;
   }
+  
+  .list {
+      width:70%;
+      margin:0 auto;
+  }
 }
 
 /* Desktops - 4 columns */
@@ -622,6 +680,10 @@ box-sizing: border-box;
  
 
   }
+  .list {
+    width: 60%;
+    margin: 0 auto;
+}
     .search {
       width: 50%;
       margin: 16px auto 0 auto;
@@ -777,3 +839,4 @@ document.querySelector('input[type=range]').addEventListener('input', function()
   this.style.setProperty('--fill-percent', this.value + '%');
 });
 */
+

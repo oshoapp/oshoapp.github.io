@@ -44,7 +44,7 @@
 .loader {
   width: 45px;
   aspect-ratio: .75;
-  --c: no-repeat linear-gradient(#000 0 0);
+  --c: no-repeat linear-gradient(var(--text) 0 0);
   background: 
     var(--c) 0%   50%,
     var(--c) 50%  50%,
@@ -114,8 +114,13 @@
 
     <div class="grid">
     </div>
+    <div class="list">
+      
+    </div>
 <script>
   const grid = document.querySelector('.grid');
+  const list = document.querySelector('.list');
+
   const loader = document.querySelector('.loader');
   const searchInput = document.getElementById('searchInput');
   let allData = []; // combined hindi + english
@@ -155,15 +160,69 @@
       grid.appendChild(a);
     });
   }
+  
+let searchAbortController = null; // keep track of the last request
 
-  // Search input listener
-  searchInput.addEventListener('input', () => {
+async function search(input) {
+    // cancel previous request if still running
+    if (searchAbortController) {
+        searchAbortController.abort();
+    }
+    searchAbortController = new AbortController();
+
+    // clear old results
+    grid.innerHTML = '';
+    list.innerHTML = '';
+    loader.style.display = 'block';
+
+    try {
+        const res = await fetch(
+            `https://osho-search-api.onrender.com/search?query=${encodeURIComponent(input)}&page=1&limit=10`,
+            { signal: searchAbortController.signal }
+        );
+
+        if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+
+        const data = await res.json();
+        loader.style.display = 'none';
+
+        if (Array.isArray(data.results)) {
+            data.results.forEach(result => {
+                const a = document.createElement('a');
+                a.innerHTML = `<label>${result.title}</label><span>${result.highlight}</span>`;
+                a.href = `/discourse.html?slug=${encodeURIComponent(result.slug)}`;
+                a.style.display = 'flex';
+                list.appendChild(a);
+            });
+        } else {
+            list.innerHTML = '<p>No results found.</p>';
+        }
+    } catch (err) {
+        if (err.name === 'AbortError') {
+            // silently ignore aborted requests
+            return;
+        }
+        console.error('Search failed:', err);
+        list.innerHTML = '<p>Error fetching results.</p>';
+        loader.style.display = 'none';
+    }
+}
+
+// usage in input listener
+searchInput.addEventListener('input', () => {
     const query = searchInput.value.trim().toLowerCase();
     const filtered = allData.filter(item =>
-      item.title.toLowerCase().includes(query)
+        item.title.toLowerCase().includes(query)
     );
-    renderItems(filtered);
-  });
+
+    if (filtered.length === 0) {
+        // deep search API
+        search(query);
+    } else {
+        renderItems(filtered);
+    }
+});
+
 </script>
 
     <script src="settings.js?version=1"></script>
