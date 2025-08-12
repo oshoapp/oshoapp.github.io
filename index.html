@@ -108,8 +108,18 @@
     </nav>
     <div class="loader"></div>
     <div class="search">
+      <div class="linearX">
         <input placeholder="Search" id="searchInput">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M10.77 18.3a7.53 7.53 0 1 1 7.53-7.53a7.53 7.53 0 0 1-7.53 7.53m0-13.55a6 6 0 1 0 6 6a6 6 0 0 0-6-6"/><path fill="currentColor" d="M20 20.75a.74.74 0 0 1-.53-.22l-4.13-4.13a.75.75 0 0 1 1.06-1.06l4.13 4.13a.75.75 0 0 1 0 1.06a.74.74 0 0 1-.53.22"/></svg>
+        <svg onclick="search()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M10.77 18.3a7.53 7.53 0 1 1 7.53-7.53a7.53 7.53 0 0 1-7.53 7.53m0-13.55a6 6 0 1 0 6 6a6 6 0 0 0-6-6"/><path fill="currentColor" d="M20 20.75a.74.74 0 0 1-.53-.22l-4.13-4.13a.75.75 0 0 1 1.06-1.06l4.13 4.13a.75.75 0 0 1 0 1.06a.74.74 0 0 1-.53.22"/></svg>
+        <input type="checkbox" id="searchmore" hidden/>
+        <label for="searchmore" class="svg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15.88 9.29L12 13.17L8.12 9.29a.996.996 0 1 0-1.41 1.41l4.59 4.59c.39.39 1.02.39 1.41 0l4.59-4.59a.996.996 0 0 0 0-1.41c-.39-.38-1.03-.39-1.42 0"/></svg>
+        </label>
+        </div>
+    <div class="dialog">
+      <label for="initialsearch">Initial Text Search</label>
+      <input type="checkbox" name="initialsearch" id="initialsearch">
+    </div>
     </div>
 
     <div class="grid">
@@ -118,11 +128,16 @@
       
     </div>
 <script>
+document.querySelector('label.svg').addEventListener('click', () => {
+  document.querySelector('.dialog').classList.toggle('open');
+});
+
   const grid = document.querySelector('.grid');
   const list = document.querySelector('.list');
 
   const loader = document.querySelector('.loader');
   const searchInput = document.getElementById('searchInput');
+ const searchmore = document.getElementById("searchmore");
   let allData = []; // combined hindi + english
 
   // Fetch both JSON files
@@ -144,6 +159,8 @@
   // Function to render grid items
   function renderItems(items) {
     grid.innerHTML = ''; // clear old
+    list.innerHTML = '';
+
     items.forEach(item => {
       const a = document.createElement('a');
       a.classList.add('item');
@@ -163,23 +180,28 @@
   
 let searchAbortController = null; // keep track of the last request
 
-async function search(input) {
-    // cancel previous request if still running
-    if (searchAbortController) {
-        searchAbortController.abort();
-    }
-    searchAbortController = new AbortController();
+async function search() {
+const input = searchInput.value.trim().toLowerCase();
+const isInitialSearch = searchmore.checked;
 
-    // clear old results
-    grid.innerHTML = '';
-    list.innerHTML = '';
-    loader.style.display = 'block';
+if (searchAbortController) {
+  searchAbortController.abort();
+}
+searchAbortController = new AbortController();
 
-    try {
-        const res = await fetch(
-            `https://osho-search-api.onrender.com/search?query=${encodeURIComponent(input)}&page=1&limit=10`,
-            { signal: searchAbortController.signal }
-        );
+grid.innerHTML = '';
+list.innerHTML = '';
+loader.style.display = 'block';
+
+const url = new URL('https://osho-search-api.onrender.com/search');
+url.searchParams.set('query', input);
+url.searchParams.set('page', '1');
+url.searchParams.set('limit', '10');
+if (isInitialSearch) url.searchParams.set('exactMatch', 'true');
+
+try {
+  const res = await fetch(url.toString(), { signal: searchAbortController.signal });
+  // ... rest of your existing code
 
         if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
 
@@ -217,8 +239,14 @@ searchInput.addEventListener('input', () => {
 
     if (filtered.length === 0) {
         // deep search API
-        search(query);
+        search();
     } else {
+        if (searchAbortController) {
+        searchAbortController.abort();
+        loader.style.display = 'none';
+
+            }
+
         renderItems(filtered);
     }
 });
