@@ -308,9 +308,14 @@ transition: 0.3s;
         justify-content: center;
         cursor: pointer;
         box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        z-index: 1000;
-        transition: transform 0.2s ease, background-color 0.3s ease;
+        z-index: 99;
+        transition: all 0.2s ease-in-out, background-color 0.3s ease;
         
+        }
+        
+        .audioPlayer.showmoree ~ .fab{
+                    bottom: 121px;
+
         }
         
         .fab:hover {
@@ -336,7 +341,7 @@ transition: 0.3s;
         display: none;
         flex-direction: column;
         gap: 12px;
-        z-index: 999;
+        z-index: 98;
         color: var(--text-color);
         transition: all 0.3s ease;
         transform: scale(0.8);
@@ -345,7 +350,11 @@ transition: 0.3s;
         line-height: 1.5;
         font-family: Poppins;
         }
+        .audioPlayer.showmoree ~ .dropdown{
+                    bottom: 176px;
+                    
 
+}
         .dropdown.show {
         display: flex;
         animation: dropdownAppear 0.3s ease forwards;
@@ -719,7 +728,7 @@ display: none;
     display: none;
     flex-direction: column;
     animation: fadein 0.3s ease-in-out forwards;
-
+z-index: 999;
 }
 @keyframes fadein {
     0%{
