@@ -7,70 +7,72 @@
 --font-size: 18px;
 --line-height: 1.6;
 }
-body.dark-mode {
+
+body.dark-mode{
   /* hsl (fallback color) */
-  --bg-dark: hsl(13 100% 2%);
-  --bg: hsl(25 100% 4%);
-  --bg-light: hsl(36 100% 6%);
-  --text: hsl(39 100% 86%);
-  --text-muted: hsl(39 54% 61%);
-  --highlight: hsl(44 100% 20%);
-  --border: hsl(42 100% 13%);
-  --border-muted: hsl(37 100% 9%);
-  --primary: hsl(40 63% 58%);
-  --secondary: hsl(219 97% 76%);
-  --danger: hsl(8 63% 66%);
-  --warning: hsl(52 49% 46%);
-  --success: hsl(151 41% 51%);
-  --info: hsl(217 73% 68%);
+  --bg-dark: hsl(4 100% 2%);
+  --bg: hsl(9 90% 5%);
+  --bg-light: hsl(15 65% 9%);
+  --text: hsl(15 100% 97%);
+  --text-muted: hsl(15 56% 71%);
+  --highlight: hsl(15 36% 40%);
+  --border: hsl(15 48% 28%);
+  --border-muted: hsl(16 76% 17%);
+  --primary: hsl(15 69% 71%);
+  --secondary: hsl(193 64% 62%);
+  --danger: hsl(9 42% 65%);
+  --warning: hsl(51 29% 53%);
+  --success: hsl(148 27% 56%);
+  --info: hsl(217 46% 66%);
   /* oklch */
-  --bg-dark: oklch(0.1 0.06 82);
-  --bg: oklch(0.15 0.06 82);
-  --bg-light: oklch(0.2 0.06 82);
-  --text: oklch(0.96 0.1 82);
-  --text-muted: oklch(0.76 0.1 82);
-  --highlight: oklch(0.5 0.12 82);
-  --border: oklch(0.4 0.12 82);
-  --border-muted: oklch(0.3 0.12 82);
-  --primary: oklch(0.76 0.12 82);
-  --secondary: oklch(0.76 0.12 262);
-  --danger: oklch(0.7 0.12 30);
-  --warning: oklch(0.7 0.12 100);
-  --success: oklch(0.7 0.12 160);
-  --info: oklch(0.7 0.12 260);
+  --bg-dark: oklch(0.1 0.04 39);
+  --bg: oklch(0.15 0.04 39);
+  --bg-light: oklch(0.2 0.04 39);
+  --text: oklch(0.96 0.08 39);
+  --text-muted: oklch(0.76 0.08 39);
+  --highlight: oklch(0.5 0.08 39);
+  --border: oklch(0.4 0.08 39);
+  --border-muted: oklch(0.3 0.08 39);
+  --primary: oklch(0.76 0.1 39);
+  --secondary: oklch(0.76 0.1 219);
+  --danger: oklch(0.7 0.08 30);
+  --warning: oklch(0.7 0.08 100);
+  --success: oklch(0.7 0.08 160);
+  --info: oklch(0.7 0.08 260);
 }
 :root {
   /* hsl (fallback color) */
-  --bg-dark: hsl(38 84% 85%);
-  --bg: hsl(38 100% 90%);
-  --bg-light: hsl(38 100% 95%);
-  --text: hsl(8 100% 5%);
-  --text-muted: hsl(42 100% 13%);
-  --highlight: hsl(39 100% 89%);
-  --border: hsl(42 84% 35%);
-  --border-muted: hsl(40 54% 50%);
-  --primary: hsl(42 100% 13%);
-  --secondary: hsl(220 61% 33%);
-  --danger: hsl(7 47% 42%);
-  --warning: hsl(53 100% 17%);
-  --success: hsl(161 100% 19%);
-  --info: hsl(217 50% 44%);
+  --bg-dark: hsl(15 94% 91%);
+  --bg: hsl(15 100% 96%);
+  --bg-light: hsl(15 100% 100%);
+  --text: hsl(0 100% 6%);
+  --text-muted: hsl(15 48% 28%);
+  --highlight: hsl(15 100% 100%);
+  --border: hsl(15 31% 51%);
+  --border-muted: hsl(15 43% 63%);
+  --primary: hsl(15 63% 28%);
+  --secondary: hsl(190 100% 13%);
+  --danger: hsl(8 32% 41%);
+  --warning: hsl(51 46% 30%);
+  --success: hsl(150 37% 33%);
+  --info: hsl(217 34% 43%);
   /* oklch */
-  --bg-dark: oklch(0.92 0.06 82);
-  --bg: oklch(0.96 0.06 82);
-  --bg-light: oklch(1 0.06 82);
-  --text: oklch(0.15 0.12 82);
-  --text-muted: oklch(0.4 0.12 82);
-  --highlight: oklch(1 0.12 82);
-  --border: oklch(0.6 0.12 82);
-  --border-muted: oklch(0.7 0.12 82);
-  --primary: oklch(0.4 0.12 82);
-  --secondary: oklch(0.4 0.12 262);
-  --danger: oklch(0.5 0.12 30);
-  --warning: oklch(0.5 0.12 100);
-  --success: oklch(0.5 0.12 160);
-  --info: oklch(0.5 0.12 260);
+  --bg-dark: oklch(0.92 0.04 39);
+  --bg: oklch(0.96 0.04 39);
+  --bg-light: oklch(1 0.04 39);
+  --text: oklch(0.15 0.08 39);
+  --text-muted: oklch(0.4 0.08 39);
+  --highlight: oklch(1 0.08 39);
+  --border: oklch(0.6 0.08 39);
+  --border-muted: oklch(0.7 0.08 39);
+  --primary: oklch(0.4 0.1 39);
+  --secondary: oklch(0.4 0.1 219);
+  --danger: oklch(0.5 0.08 30);
+  --warning: oklch(0.5 0.08 100);
+  --success: oklch(0.5 0.08 160);
+  --info: oklch(0.5 0.08 260);
 }
+
 @font-face {
     font-family: 'AdobeDevnagri';
     src: url('Adobe Devanagari.otf') format('opentype');
@@ -98,7 +100,7 @@ body.dark-mode {
         line-height: var(--line-height);
         transition: all 0.3s ease;
         flex-direction: column;
-        width:100vw;
+        width:100%;
         overflow-x:hidden ;
         
       
@@ -605,26 +607,67 @@ box-sizing: border-box;
   -ms-user-select: none; /* IE 10 and IE 11 */
   user-select: none; 
   flex-direction: column;
-/*   transition: bottom 0.3s cubic-bezier(0.080, 0.770, 0.445, 0.985);
- */  
+  transition: bottom 0.3s cubic-bezier(0.080, 0.770, 0.445, 0.985);
  
-  transition: transform 0.4s cubic-bezier(0.08, 0.77, 0.445, 0.985),
- height 0.4s cubic-bezier(0.08, 0.77, 0.445, 0.985),
- border-radius 0.4s ease;
 }
 
 .audioPlayer.full{
-height: 100vh;
-width:100vw;
-top:0;
+flex-direction: column;
+border-radius: 0;
+ animation: slideIn 0.3s ease-in-out forwards;
+}
+
+@keyframes slideIn {
+  0% {
+   bottom:0px; /* start slightly off-screen/left */
+    height:112px;
+    border-radius:12px 12px 0 0;
+top:calc(100% - 112px);
+    backdrop-filter: blur(15px);
+
+           border: 1px solid var(--border);
+          
+
+  }
+  
+50% {
+ bottom:25%;
+ height:50vh;
+ border-radius:50px;
+
+} 
+ 
+   /*  60% {
+     bottom: 30%;
+     border-radius: 50px;
+     top:30%;
+   
+     } */
+/* 70% {
+bottom: 20%;
+border-radius: 50px;
+border-radius: 25px;
+  top:15%;
+height:70vh;
+} */
+ 99%{
+           border: 1px solid var(--border);
+ }
+  
+  100% {
+      bottom:0;
+      top:0;
 bottom:0;
 left:0;
 right:0;
-border-radius: 0;
+height: 100vh;
+width:100vw;
+border-radius:0;
 border:0;
-} 
+    backdrop-filter: blur(30px);
 
-
+  }
+}
 
 .audioPlayer.showmoree{
     bottom:0;
@@ -668,7 +711,56 @@ margin:0 4px;
     
 }
 
+.audioPlayer.full .audioA , .audioPlayer.full .audioB{
+display: none;
+    
+}
+.audioPlayer .audioMax {
+    display: none;
+    flex-direction: column;
+    animation: fadein 0.3s ease-in-out forwards;
 
+}
+@keyframes fadein {
+    0%{
+        opacity:0;
+    }
+
+    100%{
+        opacity: 100%;
+    }
+}
+.audioMax .max-nav{
+    display: flex;
+    height:56px;
+    padding:12px;
+    align-items: center;
+    justify-content: space-around;
+}
+.audioMax .max-nav span{
+font-size: 1.5rem;
+font-weight: 600;
+
+    
+}
+.audioPlayer.full .audioMax{
+display: flex;
+    align-items: center;
+    flex:1;
+}
+.max-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex:5;
+}
+.max-main img {
+    background: var(--bg-light);
+    height:20vw;
+    width:20vw;
+    border-radius: 50vw;
+    border:1px solid var(--highlight);
+}
 .list {
     display:flex;
     flex-direction: column;
