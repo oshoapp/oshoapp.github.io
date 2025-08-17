@@ -1,1 +1,2 @@
 /discourse/:slug   /discourse.html?slug=:slug   200
+/discourses/:slug   /discourses.html?slug=:slug   200
