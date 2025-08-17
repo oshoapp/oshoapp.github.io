@@ -18,6 +18,7 @@ const contentParagraph = document.getElementById('content-paragraph');
 const highlightToolbar = document.getElementById('highlight-toolbar');
 const applyHighlightBtn = document.getElementById('apply-highlight-btn');
 const copyBtn = document.getElementById('copy-btn');
+const shareBtn = document.getElementById('share-btn');
 
 const applyUnderlineBtn = document.getElementById('apply-underline-btn');
 const deleteStyleBtn = document.getElementById('delete-style-btn');
@@ -326,8 +327,11 @@ saveHighlightsToStorage(highlightsMap);
         applyUnderlineBtn.classList.toggle('visible', !isEditMode);
         
         copyBtn.classList.toggle('hidden', isEditMode);
-        copyBtn.classList.toggle('visible', !isEditMode);
+        shareBtn.classList.toggle('hidden', isEditMode);
         
+        copyBtn.classList.toggle('visible', !isEditMode);
+        shareBtn.classList.toggle('visible', !isEditMode);
+
         deleteStyleBtn.classList.toggle('hidden', !isEditMode);
         deleteStyleBtn.classList.toggle('visible', isEditMode);
         colorPalette.classList.toggle('hidden', !isEditMode);
@@ -391,7 +395,10 @@ saveHighlightsToStorage(highlightsMap);
         
         copyBtn.classList.toggle('hidden', isEditMode);
         copyBtn.classList.toggle('visible', !isEditMode);
-        
+        shareBtn.classList.toggle('hidden', isEditMode);
+        shareBtn.classList.toggle('visible', !isEditMode);
+
+
         deleteStyleBtn.classList.toggle('hidden', !isEditMode);
         deleteStyleBtn.classList.toggle('visible', isEditMode);
         colorPalette.classList.toggle('hidden', !isEditMode);
@@ -726,6 +733,8 @@ copyBtn.addEventListener('click', () => {
     selection.removeAllRanges();
     hideToolbar();
 });
+
+shareBtn.addEventListener('click', toggleShare);
 // underline button
 applyUnderlineBtn.addEventListener('click', () => applyStyle('underline'));
 //delete button
