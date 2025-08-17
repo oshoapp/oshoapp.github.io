@@ -165,7 +165,7 @@ document.querySelector('label.svg').addEventListener('click', () => {
     items.forEach(item => {
       const a = document.createElement('a');
       a.classList.add('item');
-      a.href = `discources/${encodeURIComponent(item.slug)}`;
+      a.href = `discourses/${encodeURIComponent(item.slug)}`;
 
       const h1 = document.createElement('h1');
       h1.innerText = item.title;
