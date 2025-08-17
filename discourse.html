@@ -250,8 +250,23 @@
     <script src="/share-dialog.js"></script>
 
 <script>
+let slug;
 
-const slug = new URLSearchParams(window.location.search).get("slug");
+// 1) Check if we have query param style (?slug=...)
+const params = new URLSearchParams(window.location.search);
+if (params.has("slug")) {
+  slug = params.get("slug");
+} else {
+  // 2) Otherwise, extract it from the path (/discourse/slug-name)
+  const pathParts = window.location.pathname.split("/");
+  // Example: ["", "discourse", "adhyatam-upanishad-01"]
+  if (pathParts[1] === "discourse" && pathParts[2]) {
+    slug = pathParts[2];
+  }
+}
+
+
+//const slug = new URLSearchParams(window.location.search).get("slug");
 const paragraph = document.getElementById("content-paragraph");
 const audioTitle = document.querySelector('marquee');
 
