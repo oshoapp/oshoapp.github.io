@@ -121,7 +121,7 @@ if (params.has("slug")) {
       data.forEach(item => {
         const a = document.createElement('a');
         a.classList.add('item');
-        a.href = `discourse/${encodeURIComponent(item.slug)}`;
+        a.href = `/discourse/${encodeURIComponent(item.slug)}`;
 
         const h1 = document.createElement('h1');
         h1.innerText = item.title;
