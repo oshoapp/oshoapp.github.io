@@ -35,9 +35,7 @@
   <!-- Custom Styles -->
   <link rel="stylesheet" href="/style.css?version=1">
   
-  
-  <script src="node_modules/eruda/eruda.js"></script>
-<script>eruda.init();</script>
+
 </head>
 
 <body>
@@ -106,7 +104,7 @@ if (params.has("slug")) {
   // 2) Otherwise, extract it from the path (/discourse/slug-name)
   const pathParts = window.location.pathname.split("/");
   // Example: ["", "discourse", "adhyatam-upanishad-01"]
-  if (pathParts[1] === "discourse" && pathParts[2]) {
+  if (pathParts[1] === "discourses" && pathParts[2]) {
     slug = pathParts[2];
   }
 }
