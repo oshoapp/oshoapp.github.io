@@ -2,8 +2,8 @@
 :root {
 --bg-color: #ffffff;
 --text-color: #1B1B1B;
---font-family: Poppins;
---normal-font:TiffinDevnagri;
+--font-family: TiffinDevnagri;
+--normal-font: Poppins;
 --font-size: 18px;
 --line-height: 1.6;
 }
