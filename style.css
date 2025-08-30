@@ -1089,7 +1089,7 @@ document.querySelector('input[type=range]').addEventListener('input', function()
     background: var(--bg-dark);
     border:1.5px solid var(--border);
     border-radius: 16px;
-    height: 90vh;
+    height: 80vh;
     width: 90vw;
     flex-direction: column;
     border-top-color: var(--highlight);
@@ -1113,7 +1113,7 @@ document.querySelector('input[type=range]').addEventListener('input', function()
 .share-container {
     flex:1;
     background: white;
-    padding: 16px;
+    padding: 8px;
     transition: font-size 0.2s ease, line-height 0.2s ease;
 }
 .share-pref{
@@ -1142,5 +1142,5 @@ document.querySelector('input[type=range]').addEventListener('input', function()
     resize: none;
     border:none;
     font-family: var(--font-family);
-    padding: 0;
+    padding: 8px;
 }

@@ -15,8 +15,8 @@ function toggleShare() {
 function shareTextDynamicSize() {
     // tweak these
     let fontMultiplier = 40;        // starting font size (px) at 0 chars
-    let shrinkRate = 0.3;           // how much to shrink per char (px)
-    let lineHeightMultiplier = 1.2; // affects line height scaling
+    let shrinkRate = 0.05;           // how much to shrink per char (px)
+    let lineHeightMultiplier = 1.20; // affects line height scaling
 
     const length = textarea.value.length || 1;
 
