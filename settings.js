@@ -35,7 +35,7 @@
     lineHeight = settings.lineHeight || 1.6;
     const theme = settings.theme || '';
     const nightLight = settings.nightLight || false;
-    const fontFamily = settings.fontFamily || "Poppins";
+    const fontFamily = settings.fontFamily || "TiffinDevnagri";
     
     // Apply loaded settings
     document.documentElement.style.setProperty('--font-size', `${fontSize}px`);
