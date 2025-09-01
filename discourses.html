@@ -126,13 +126,15 @@ if (params.has("slug")) {
     .then(data => {
       loader.style.display = 'none';
 
-      data.forEach(item => {
+      data.forEach((item, index) => {
         const a = document.createElement('a');
         a.classList.add('item');
         a.href = `/discourse/${encodeURIComponent(item.slug)}`;
+        a.style.setProperty("--i", index);
 
         const h1 = document.createElement('h1');
         h1.innerText = item.title;
+        
 
         const span = document.createElement('span');
         span.innerHTML = item.duration + '<a href="https://oshoworld.com' + item.file + '" download><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4" d="m3.25 13.25h9m-8.5-6.5 4 3.5 4-3.5m-4-5v8.5"/></svg></a>';
