@@ -170,10 +170,12 @@ document.querySelector('label.svg').addEventListener('click', () => {
   function renderItems(items) {
     grid.innerHTML = ''; // clear old
     list.innerHTML = '';
-
-    items.forEach(item => {
+    
+    items.forEach((item, index) => {
+      
       const a = document.createElement('a');
       a.classList.add('item');
+      a.style.setProperty("--i", index);
       a.href = `discourses/${encodeURIComponent(item.slug)}`;
       
 
