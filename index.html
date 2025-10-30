@@ -77,7 +77,49 @@
   100%{background-size: 20% 50% ,20% 50% ,20% 50% }
 }
 
+
+.paginationjs {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  font-family: sans-serif;
+}
+
+.paginationjs-pages ul{
+  display: flex;
+  list-style: none;
+  gap: 8px;
+  padding: 0;
+  flex-direction: row;
+}
+
+.paginationjs-pages li {
+  list-style: none;
+  cursor: pointer;
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  user-select: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.paginationjs-pages li.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.paginationjs-pages li:hover:not(.active) {
+  background: #f3f3f3;
+}
+
+.paginationjs-pages li.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
   </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-MDXGZJ54HC"></script>
 <script>
@@ -112,7 +154,7 @@
   }
 }
 </script>
-
+<script src="https://pagination.js.org/dist/2.6.0/pagination.min.js"></script>
 </head>
 
 <body>
@@ -170,13 +212,36 @@
     </div>
     </div>
 
+
+<div id="data-container"></div>
+
     <div class="grid">
     </div>
+    
     <div class="list">
       
     </div>
-    
+
+<div id="pagin"></div>
+
 <script>
+// $('#pagin').pagination({
+//   dataSource: [1, 2, 3, 4, 5, 6, 7],
+//   pageSize: 1, // how many per page
+//   callback: function(data, pagination) {
+//     // Find container
+//     var dataContainer = $('#data-container');
+//     dataContainer.empty();
+
+//     // Render items manually
+//     $.each(data, function(index, item) {
+//       dataContainer.append('<div>Item ' + item + '</div>');
+//     });
+//   }
+// });
+
+
+
 document.querySelector('label.svg').addEventListener('click', () => {
   document.querySelector('.dialog').classList.toggle('open');
 });
@@ -230,79 +295,86 @@ document.querySelector('label.svg').addEventListener('click', () => {
     });
   }
   
-let searchAbortController = null; // keep track of the last request
+let searchAbortController = null;
+let paginationInitialized = false;
 
-async function search() {
-const input = searchInput.value.trim().toLowerCase();
-const isInitialSearch = searchmore.checked;
+async function search(page = 1) {
+  const input = searchInput.value.trim().toLowerCase();
+  const isInitialSearch = searchmore.checked;
 
-if (searchAbortController) {
-  searchAbortController.abort();
-}
-searchAbortController = new AbortController();
+  if (searchAbortController) searchAbortController.abort();
+  searchAbortController = new AbortController();
 
-grid.innerHTML = '';
-list.innerHTML = '';
-loader.style.display = 'block';
+  grid.innerHTML = '';
+  list.innerHTML = '';
+  loader.style.display = 'block';
 
-const url = new URL('https://osho-search-api.onrender.com/search');
-url.searchParams.set('query', input);
-url.searchParams.set('page', '1');
-url.searchParams.set('limit', '10');
-if (isInitialSearch) url.searchParams.set('exactMatch', 'true');
+  const url = new URL('https://osho-search-api.onrender.com/search');
+  url.searchParams.set('query', input);
+  url.searchParams.set('page', page);
+  url.searchParams.set('limit', '10');
+  if (isInitialSearch) url.searchParams.set('exactMatch', 'true');
 
-try {
-  const res = await fetch(url.toString(), { signal: searchAbortController.signal });
-  // ... rest of your existing code
+  try {
+    const res = await fetch(url.toString(), { signal: searchAbortController.signal });
+    if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+    const data = await res.json();
+    loader.style.display = 'none';
 
-        if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+    if (Array.isArray(data.results)) {
+      list.innerHTML = '';
+      data.results.forEach(result => {
+        const a = document.createElement('a');
+        a.innerHTML = `<label>${result.title}</label><span>${result.highlight}</span>`;
+        a.href = `/discourse.html?slug=${encodeURIComponent(result.slug)}`;
+        a.style.display = 'flex';
+        list.appendChild(a);
+      });
 
-        const data = await res.json();
-        loader.style.display = 'none';
-
-        if (Array.isArray(data.results)) {
-            data.results.forEach(result => {
-                const a = document.createElement('a');
-                a.innerHTML = `<label>${result.title}</label><span>${result.highlight}</span>`;
-                a.href = `/discourse.html?slug=${encodeURIComponent(result.slug)}`;
-                a.style.display = 'flex';
-                list.appendChild(a);
-            });
-        } else {
-            list.innerHTML = '<p>No results found.</p>';
-        }
-    } catch (err) {
-        if (err.name === 'AbortError') {
-            // silently ignore aborted requests
-            return;
-        }
-        console.error('Search failed:', err);
-        list.innerHTML = '<p>Error fetching results.</p>';
-        loader.style.display = 'none';
-    }
-}
-
-// usage in input listener
-searchInput.addEventListener('input', () => {
-    const query = searchInput.value.trim().toLowerCase();
-    const filtered = allData.filter(item =>
-        item.title.toLowerCase().includes(query)
-    );
-
-    if (filtered.length === 0) {
-        // deep search API
-        search();
-    } else {
-        if (searchAbortController) {
-        searchAbortController.abort();
-        loader.style.display = 'none';
-
-            }
-
-        renderItems(filtered);
-    }
+      // ✅ Initialize pagination once per search
+      if (!paginationInitialized) {
+$('#pagin').pagination({
+  dataSource: new Array(data.total_pages).fill(0), // ✅ Dummy array to satisfy plugin
+  pageSize: 1,
+  pageNumber: page,
+  callback: function (_, pagination) {
+    search(pagination.pageNumber); // fetch new page
+  }
 });
 
+        paginationInitialized = true;
+      }
+    } else {
+      list.innerHTML = '<p>No results found.</p>';
+    }
+
+  } catch (err) {
+    if (err.name !== 'AbortError') {
+      console.error('Search failed:', err);
+      list.innerHTML = '<p>Error fetching results.</p>';
+      loader.style.display = 'none';
+    }
+  }
+}
+
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.trim().toLowerCase();
+  const filtered = allData.filter(item =>
+    item.title.toLowerCase().includes(query)
+  );
+
+  if (filtered.length === 0) {
+    paginationInitialized = false; // reset
+    search();
+  } else {
+    if (searchAbortController) searchAbortController.abort();
+    loader.style.display = 'none';
+    renderItems(filtered);
+  }
+});
+
+
+// usage in input listener
 </script>
 
     <script src="settings.js?version=1"></script>
