@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="/site.webmanifest">
+
+<!-- Chrome, Firefox OS and Opera -->
+<meta name="theme-color" content="#F0F5FF" id="meta-theme-color">
+
+<!-- Windows Phone -->
+<meta name="msapplication-navbutton-color" content="#F0F5FF" id="meta-ms-nav-color">
+
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" id="meta-apple-status-style">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<!-- Android Chrome on Lollipop and later -->
+<meta name="mobile-web-app-capable" content="yes">
+<title>OSHORead – Read & Listen to Osho's Discourses (Hindi & English)</title>
+<meta name="description" content="OSHORead is a minimal, open-source web app to read and listen to Osho's discourses in Hindi and English. Featuring an advanced reader with distraction-free UI.">
+<meta name="keywords" content="Osho, OSHORead, Osho discourses, Hindi Osho books, English Osho books, Osho audiobook, Osho quotes, meditation, spiritual books, osho online reading">
+<meta name="author" content="Osho">
+<meta property="og:title" content="OSHORead – Read & Listen to Osho's Discourses">
+<meta property="og:description" content="Minimal open-source app to explore Osho's spiritual teachings in Hindi and English. Read or listen with a distraction-free interface.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://oshoread.netlify.app">
+<meta property="og:image" content="https://oshoread.netlify.app/og-image.png">
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sahitya:wght@400;700&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:wght@800&display=swap" rel="stylesheet">
+
+<!-- Standard Favicon -->
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+<!-- PNG Favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+
+<!-- Apple Touch Icon -->
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+<!-- Android/Chrome Icons -->
+<link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="style.css?version=1">
+  
+  <style>
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 45px;
+  aspect-ratio: .75;
+  --c: no-repeat linear-gradient(var(--text) 0 0);
+  background: 
+    var(--c) 0%   50%,
+    var(--c) 50%  50%,
+    var(--c) 100% 50%;
+  animation: l7 1s infinite linear alternate;
+  position: fixed;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+}
+@keyframes l7 {
+  0%  {background-size: 20% 50% ,20% 50% ,20% 50% }
+  20% {background-size: 20% 20% ,20% 50% ,20% 50% }
+  40% {background-size: 20% 100%,20% 20% ,20% 50% }
+  60% {background-size: 20% 50% ,20% 100%,20% 20% }
+  80% {background-size: 20% 50% ,20% 50% ,20% 100%}
+  100%{background-size: 20% 50% ,20% 50% ,20% 50% }
+}
+
+
+.paginationjs {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  font-family: sans-serif;
+}
+
+.paginationjs-pages ul{
+  display: flex;
+  list-style: none;
+  gap: 8px;
+  padding: 0;
+  flex-direction: row;
+}
+
+.paginationjs-pages li {
+  list-style: none;
+  cursor: pointer;
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  user-select: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.paginationjs-pages li.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.paginationjs-pages li:hover:not(.active) {
+  background: #f3f3f3;
+}
+
+.paginationjs-pages li.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.radio-row{
+  margin:8px 16px 0 16px;
+  display: flex;
+  background: var(--bg-dark);
+  border:1px solid var(--border-muted);
+  border-bottom-color: var(--highlight);
+
+  border-radius: 12px;
+  padding: 4px;
+}
+.radio-row input {
+  display: none;
+}
+.radio-row label{
+  font-size: 14px;
+  flex:1;
+  text-align: center;
+  border-radius: 8px;
+  color:var(--text-muted);
+  font-weight: 500;
+  cursor: pointer;
+  
+}
+input[type="radio"]:checked + label {
+  background: var(--bg);
+  color:var(--text);
+  border:1px solid var(--border-muted);
+
+border-top:1px solid var(--highlight);
+
+}
+
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MDXGZJ54HC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MDXGZJ54HC');
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "OSHORead",
+  "url": "https://oshoread.netlify.app/",
+  "description": "OSHORead is a minimal, open-source web app to read and listen to Osho's discourses in Hindi and English. Featuring an advanced reader with distraction-free UI.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "OSHORead",
+    "url": "https://oshoread.netlify.app/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://oshoread.netlify.app/android-chrome-192x192.png",
+      "width": 192,
+      "height": 192
+    }
+  },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://oshoread.netlify.app/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<script src="https://pagination.js.org/dist/2.6.0/pagination.min.js"></script>
+</head>
+
+<body>
+    <nav>
+        <a class="logo" href="index.html">
+          
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 1024 1024" fill="currentColor">
+  <g>
+    <path fill="currentColor" d="M 483.18 921.50 C467.60,891.00 455.12,865.62 455.44,865.10 C456.18,863.90 470.94,860.43 484.21,858.34 C498.68,856.05 529.02,856.04 543.50,858.31 C554.53,860.04 568.67,863.33 569.77,864.44 C570.09,864.76 567.26,870.98 563.47,878.26 C559.69,885.54 552.29,899.83 547.04,910.02 C541.79,920.21 531.88,939.44 525.01,952.77 C518.13,966.10 512.28,976.99 512.01,976.98 C511.73,976.96 498.75,952.00 483.18,921.50 ZM 564.12 857.30 C540.21,849.72 503.06,849.05 466.03,855.53 C458.62,856.83 452.46,857.79 452.33,857.66 C451.87,857.20 447.74,836.77 432.00,757.00 C413.18,661.71 387.25,530.39 375.99,473.50 C371.64,451.50 365.35,419.55 362.01,402.50 C358.66,385.45 355.67,370.21 355.36,368.64 L 354.79 365.78 L 360.15 366.52 C385.48,369.98 407.62,385.59 418.63,407.75 C420.06,410.64 421.31,413.00 421.40,413.00 C421.49,413.00 426.73,409.61 433.03,405.47 C462.67,386.00 485.73,377.94 511.94,377.88 C537.94,377.82 563.15,386.47 590.76,404.92 L 602.80 412.97 L 615.20 400.70 C628.76,387.29 641.90,376.88 652.00,371.57 C658.43,368.19 667.59,365.26 668.60,366.26 C669.06,366.72 660.56,410.52 618.50,624.50 C606.62,684.96 593.44,752.11 580.44,818.50 C576.24,839.95 572.51,857.98 572.15,858.57 C571.71,859.30 569.11,858.88 564.12,857.30 ZM 538.91 444.02 C549.33,441.89 559.70,438.59 567.39,434.96 L 572.28 432.65 L 570.00 430.80 C566.06,427.61 551.81,420.31 544.35,417.66 C523.57,410.27 501.45,410.21 480.09,417.47 C472.37,420.10 458.86,426.94 454.44,430.47 L 451.73 432.63 L 461.61 436.43 C473.84,441.12 487.89,444.75 498.46,445.96 C509.53,447.22 527.43,446.36 538.91,444.02 ZM 434.47 825.81 C430.99,815.26 421.36,793.31 414.81,781.00 C389.89,734.19 355.34,689.24 307.55,641.46 C260.06,593.98 205.48,549.58 146.00,510.04 C135.82,503.28 127.07,497.36 126.55,496.87 C126.01,496.37 176.72,496.00 244.83,496.00 C339.35,496.00 364.14,496.26 364.44,497.25 C364.65,497.94 368.72,516.50 373.49,538.50 C378.25,560.50 385.69,594.70 390.02,614.50 C394.35,634.30 406.49,689.88 416.99,738.00 C427.49,786.12 436.54,827.23 437.10,829.35 C439.03,836.59 437.21,834.14 434.47,825.81 ZM 585.58 830.50 C585.91,828.85 589.49,812.42 593.52,794.00 C597.56,775.58 612.36,707.85 626.41,643.50 C640.47,579.15 653.44,519.75 655.25,511.50 L 658.53 496.50 L 777.26 496.25 C842.57,496.11 896.00,496.33 896.00,496.75 C896.00,497.16 891.39,500.43 885.75,504.00 C872.14,512.63 845.15,531.56 826.01,545.90 C731.85,616.45 656.96,695.08 615.94,766.50 C607.48,781.22 595.06,807.17 590.57,819.50 C586.17,831.59 584.68,834.87 585.58,830.50 ZM 354.58 361.86 C352.48,349.00 350.79,329.65 350.32,313.00 C348.73,257.36 362.95,212.99 392.54,181.20 C420.17,151.51 459.76,134.16 504.00,132.35 C578.24,129.31 639.21,167.48 662.96,231.88 C671.00,253.70 674.41,276.32 674.29,307.00 C674.21,327.94 671.44,360.86 669.50,364.00 C668.53,365.57 653.89,365.18 648.79,363.45 C635.98,359.08 628.09,343.93 628.00,323.50 C627.96,314.03 624.95,300.07 620.69,289.62 C606.05,253.72 558.28,225.63 512.00,225.72 C479.92,225.79 444.84,240.20 422.59,262.45 C405.82,279.21 399.12,295.03 396.53,324.00 C394.95,341.70 393.27,347.80 388.14,354.53 C382.60,361.77 376.76,364.36 364.84,364.84 L 355.13 365.23 L 354.58 361.86 Z" />
+  </g>
+</svg>
+          
+          OHORead</a>
+          
+          <!--horizontal-menu-for-desktop-resolution--><!--gets-hidden-on-mobile-devices-->
+        <ul class="menu">
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+<div class="smol-grid">
+          <li>
+            <a href="https://discord.gg/EnQA8eRsbw">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.1.1 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.1 16.1 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09c-.01-.02-.04-.03-.07-.03c-1.5.26-2.93.71-4.27 1.33c-.01 0-.02.01-.03.02c-2.72 4.07-3.47 8.03-3.1 11.95c0 .02.01.04.03.05c1.8 1.32 3.53 2.12 5.24 2.65c.03.01.06 0 .07-.02c.4-.55.76-1.13 1.07-1.74c.02-.04 0-.08-.04-.09c-.57-.22-1.11-.48-1.64-.78c-.04-.02-.04-.08-.01-.11c.11-.08.22-.17.33-.25c.02-.02.05-.02.07-.01c3.44 1.57 7.15 1.57 10.55 0c.02-.01.05-.01.07.01c.11.09.22.17.33.26c.04.03.04.09-.01.11c-.52.31-1.07.56-1.64.78c-.04.01-.05.06-.04.09c.32.61.68 1.19 1.07 1.74c.03.01.06.02.09.01c1.72-.53 3.45-1.33 5.25-2.65c.02-.01.03-.03.03-.05c.44-4.53-.73-8.46-3.1-11.95c-.01-.01-.02-.02-.04-.02M8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.84 2.12-1.89 2.12m6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.83 2.12-1.89 2.12"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://t.me/oshoread">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19c-.14.75-.42 1-.68 1.03c-.58.05-1.02-.38-1.58-.75c-.88-.58-1.38-.94-2.23-1.5c-.99-.65-.35-1.01.22-1.59c.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02c-.09.02-1.49.95-4.22 2.79c-.4.27-.76.41-1.08.4c-.36-.01-1.04-.2-1.55-.37c-.63-.2-1.12-.31-1.08-.66c.02-.18.27-.36.74-.55c2.92-1.27 4.86-2.11 5.83-2.51c2.78-1.16 3.35-1.36 3.73-1.36c.08 0 .27.02.39.12c.1.08.13.19.14.27c-.01.06.01.24 0 .38" stroke-width="0.2" stroke="currentColor"/></svg>
+            </a>
+          </li>
+          <li>
+            <a href="https://github.com/oshoapp">
+              <!--Tab to edit-->
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5c.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34c-.46-1.16-1.11-1.47-1.11-1.47c-.91-.62.07-.6.07-.6c1 .07 1.53 1.03 1.53 1.03c.87 1.52 2.34 1.07 2.91.83c.09-.65.35-1.09.63-1.34c-2.22-.25-4.55-1.11-4.55-4.92c0-1.11.38-2 1.03-2.71c-.1-.25-.45-1.29.1-2.64c0 0 .84-.27 2.75 1.02c.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02c.55 1.35.2 2.39.1 2.64c.65.71 1.03 1.6 1.03 2.71c0 3.82-2.34 4.66-4.57 4.91c.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"/></svg>
+          </a>
+          </li>
+          <li onclick="toggleTheme()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M12 19a1 1 0 0 1 .993.883L13 20v1a1 1 0 0 1-1.993.117L11 21v-1a1 1 0 0 1 1-1m6.313-2.09l.094.083l.7.7a1 1 0 0 1-1.32 1.497l-.094-.083l-.7-.7a1 1 0 0 1 1.218-1.567zm-11.306.083a1 1 0 0 1 .083 1.32l-.083.094l-.7.7a1 1 0 0 1-1.497-1.32l.083-.094l.7-.7a1 1 0 0 1 1.414 0M4 11a1 1 0 0 1 .117 1.993L4 13H3a1 1 0 0 1-.117-1.993L3 11zm17 0a1 1 0 0 1 .117 1.993L21 13h-1a1 1 0 0 1-.117-1.993L20 11zM6.213 4.81l.094.083l.7.7a1 1 0 0 1-1.32 1.497l-.094-.083l-.7-.7A1 1 0 0 1 6.11 4.74zm12.894.083a1 1 0 0 1 .083 1.32l-.083.094l-.7.7a1 1 0 0 1-1.497-1.32l.083-.094l.7-.7a1 1 0 0 1 1.414 0M12 2a1 1 0 0 1 .993.883L13 3v1a1 1 0 0 1-1.993.117L11 4V3a1 1 0 0 1 1-1m0 5a5 5 0 1 1-4.995 5.217L7 12l.005-.217A5 5 0 0 1 12 7"/></svg>
+          </li>
+          </div>
+        </ul>
+        
+        <!--hamburger-icon-for-mobile-device--> <!--gets-hidden-on-desktop-displays-->
+        <a href="#" class="hamburger">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M4 18q-.425 0-.712-.288T3 17t.288-.712T4 16h16q.425 0 .713.288T21 17t-.288.713T20 18zm0-5q-.425 0-.712-.288T3 12t.288-.712T4 11h16q.425 0 .713.288T21 12t-.288.713T20 13zm0-5q-.425 0-.712-.288T3 7t.288-.712T4 6h16q.425 0 .713.288T21 7t-.288.713T20 8z"/></svg>
+        </a>
+    </nav>
+    <script>
+  const hamburger = document.querySelector(".hamburger");
+  const menu = document.querySelector("ul.menu");
+  
+  hamburger.addEventListener("click", (e) => {
+    e.preventDefault();
+    menu.classList.toggle("show");
+  });
+  
+  // Optional: close dropdown when clicking outside
+  document.addEventListener("click", (e) => {
+    if (!hamburger.contains(e.target) && !menu.contains(e.target)) {
+      menu.classList.remove("show");
+    }
+  });
+</script>
+<div class="loader"></div>
+    <div class="search">
+      <div class="linearX">
+        <input placeholder="Search" id="searchInput">
+        <svg onclick="search()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M10.77 18.3a7.53 7.53 0 1 1 7.53-7.53a7.53 7.53 0 0 1-7.53 7.53m0-13.55a6 6 0 1 0 6 6a6 6 0 0 0-6-6"/><path fill="currentColor" d="M20 20.75a.74.74 0 0 1-.53-.22l-4.13-4.13a.75.75 0 0 1 1.06-1.06l4.13 4.13a.75.75 0 0 1 0 1.06a.74.74 0 0 1-.53.22"/></svg>
+        <input type="checkbox" id="searchmore" hidden/>
+        <label for="searchmore" class="svg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15.88 9.29L12 13.17L8.12 9.29a.996.996 0 1 0-1.41 1.41l4.59 4.59c.39.39 1.02.39 1.41 0l4.59-4.59a.996.996 0 0 0 0-1.41c-.39-.38-1.03-.39-1.42 0"/></svg>
+        </label>
+        </div>
+      <div class="dialog">
+        <label for="initialsearch">Initial Text Search</label>
+        <input type="checkbox" name="initialsearch" id="initialsearch">
+      </div>
+    </div>
+
+<!--filter-->
+<div class="radio-row">
+  <input type="radio" id="all" name="language" value="All" checked>
+  <label for="all">All</label>
+  
+  <input type="radio" id="hindi" name="language" value="Hindi">
+  <label for="hindi">Hindi</label>
+  
+  <input type="radio" id="english" name="language" value="English">
+  <label for="english">English</label>
+</div>
+
+<div id="data-container"></div>
+
+<div id="pagin"></div>
+
+    <div class="grid">
+    </div>
+    
+    <div class="list">
+      
+    </div>
+
+<script>
+// $('#pagin').pagination({
+//   dataSource: [1, 2, 3, 4, 5, 6, 7],
+//   pageSize: 1, // how many per page
+//   callback: function(data, pagination) {
+//     // Find container
+//     var dataContainer = $('#data-container');
+//     dataContainer.empty();
+
+//     // Render items manually
+//     $.each(data, function(index, item) {
+//       dataContainer.append('<div>Item ' + item + '</div>');
+//     });
+//   }
+// });
+
+
+
+document.querySelector('label.svg').addEventListener('click', () => {
+  document.querySelector('.dialog').classList.toggle('open');
+});
+
+  const grid = document.querySelector('.grid');
+  const list = document.querySelector('.list');
+
+  const loader = document.querySelector('.loader');
+  const searchInput = document.getElementById('searchInput');
+ const searchmore = document.getElementById("searchmore");
+  let allData = []; // combined hindi + english
+
+  // Fetch both JSON files
+  Promise.all([
+    fetch('https://extremekrish.github.io/osho/osho_hindi.json').then(res => res.json()),
+    fetch('https://extremekrish.github.io/osho/osho_english.json').then(res => res.json())
+  ])
+  .then(([hindiData, englishData]) => {
+    window.hindiData = hindiData;
+    window.englishData = englishData;
+    allData = [...hindiData, ...englishData];
+  
+    loader.style.display = 'none';
+    renderItems(allData);
+  })
+    .catch(err => {
+      loader.innerText = 'Failed to load data.';
+      console.error('Fetch error:', err);
+    });
+
+
+// Language Filter
+document.querySelectorAll('input[name="language"]').forEach(radio => {
+  radio.addEventListener('change', () => {
+    const selected = document.querySelector('input[name="language"]:checked').value;
+
+    let filteredData = [];
+    if (selected === 'Hindi') filteredData = window.hindiData;
+    else if (selected === 'English') filteredData = window.englishData;
+    else filteredData = allData; // All
+
+    renderItems(filteredData);
+  });
+});
+
+  // Function to render grid items
+  function renderItems(items) {
+    grid.innerHTML = ''; // clear old
+    list.innerHTML = '';
+    
+    items.forEach((item, index) => {
+      
+      const a = document.createElement('a');
+      a.classList.add('item');
+      a.style.setProperty("--i", index);
+      a.href = `discourses/${encodeURIComponent(item.slug)}`;
+      
+
+      const h1 = document.createElement('h1');
+      h1.innerText = item.title;
+
+      const span = document.createElement('span');
+      span.innerText = `${item.count} Discources`;
+
+      a.appendChild(h1);
+      a.appendChild(span);
+      grid.appendChild(a);
+    });
+  }
+  
+let searchAbortController = null;
+let paginationInitialized = false;
+
+async function search(page = 1) {
+  const input = searchInput.value.trim().toLowerCase();
+  const isInitialSearch = searchmore.checked;
+  // Always reset to "All" when searching
+document.getElementById('all').checked = true;
+
+
+  if (searchAbortController) searchAbortController.abort();
+  searchAbortController = new AbortController();
+
+  grid.innerHTML = '';
+  list.innerHTML = '';
+  loader.style.display = 'block';
+
+  const url = new URL('https://osho-search-api.onrender.com/search');
+  url.searchParams.set('query', input);
+  url.searchParams.set('page', page);
+  url.searchParams.set('limit', '10');
+  if (isInitialSearch) url.searchParams.set('exactMatch', 'true');
+
+  try {
+    const res = await fetch(url.toString(), { signal: searchAbortController.signal });
+    if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+    const data = await res.json();
+    loader.style.display = 'none';
+
+    if (Array.isArray(data.results)) {
+      list.innerHTML = '';
+      data.results.forEach(result => {
+        const a = document.createElement('a');
+        a.innerHTML = `<label>${result.title}</label><span>${result.highlight}</span>`;
+        a.href = `/discourse.html?slug=${encodeURIComponent(result.slug)}`;
+        a.style.display = 'flex';
+        list.appendChild(a);
+      });
+
+      // ✅ Initialize pagination once per search
+      if (!paginationInitialized) {
+$('#pagin').pagination({
+  dataSource: new Array(data.total_pages).fill(0), // ✅ Dummy array to satisfy plugin
+  pageSize: 1,
+  pageNumber: page,
+  callback: function (_, pagination) {
+    search(pagination.pageNumber); // fetch new page
+  }
+});
+
+        paginationInitialized = true;
+      }
+    } else {
+      list.innerHTML = '<p>No results found.</p>';
+    }
+
+  } catch (err) {
+    if (err.name !== 'AbortError') {
+      console.error('Search failed:', err);
+      list.innerHTML = '<p>Error fetching results.</p>';
+      loader.style.display = 'none';
+    }
+  }
+}
+
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.trim().toLowerCase();
+const selected = document.querySelector('input[name="language"]:checked').value;
+let dataset = allData;
+if (selected === 'Hindi') dataset = window.hindiData;
+else if (selected === 'English') dataset = window.englishData;
+
+const filtered = dataset.filter(item =>
+  item.title.toLowerCase().includes(query)
+);
+
+  if (filtered.length === 0) {
+    paginationInitialized = false; // reset
+    search();
+  } else {
+    if (searchAbortController) searchAbortController.abort();
+    loader.style.display = 'none';
+    renderItems(filtered);
+  }
+});
+
+
+// usage in input listener
+</script>
+
+    <script src="settings.js?version=1"></script>
+  
+</body>
+</html>
