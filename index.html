@@ -118,6 +118,38 @@
   cursor: not-allowed;
 }
 
+.radio-row{
+  margin:8px 16px 0 16px;
+  display: flex;
+  background: var(--bg-dark);
+  border:1px solid var(--border-muted);
+  border-bottom-color: var(--highlight);
+
+  border-radius: 12px;
+  padding: 4px;
+}
+.radio-row input {
+  display: none;
+}
+.radio-row label{
+  font-size: 14px;
+  flex:1;
+  text-align: center;
+  border-radius: 8px;
+  color:var(--text-muted);
+  font-weight: 500;
+  cursor: pointer;
+  
+}
+input[type="radio"]:checked + label {
+  background: var(--bg);
+  color:var(--text);
+  border:1px solid var(--border-muted);
+
+border-top:1px solid var(--highlight);
+
+}
+
   </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <!-- Google tag (gtag.js) -->
@@ -168,19 +200,17 @@
 </svg>
           
           OSHORead</a>
+          
+          <!--horizontal-menu-for-desktop-resolution--><!--gets-hidden-on-mobile-devices-->
         <ul class="menu">
-          <li><a href="saved.html">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="m12 16.923l-3.738 1.608q-.808.348-1.535-.134Q6 17.916 6 17.052V5.616q0-.691.463-1.153T7.616 4h8.769q.69 0 1.153.463T18 5.616v11.436q0 .864-.727 1.345q-.727.482-1.535.134z"/></svg>
-          </a></li>
           <li><a href="contact.html">Contact</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="privacy-policy.html">Privacy Policy</a></li>
-
+<div class="smol-grid">
           <li>
-                    <a href="https://discord.gg/EnQA8eRsbw">
-
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.1.1 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.1 16.1 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09c-.01-.02-.04-.03-.07-.03c-1.5.26-2.93.71-4.27 1.33c-.01 0-.02.01-.03.02c-2.72 4.07-3.47 8.03-3.1 11.95c0 .02.01.04.03.05c1.8 1.32 3.53 2.12 5.24 2.65c.03.01.06 0 .07-.02c.4-.55.76-1.13 1.07-1.74c.02-.04 0-.08-.04-.09c-.57-.22-1.11-.48-1.64-.78c-.04-.02-.04-.08-.01-.11c.11-.08.22-.17.33-.25c.02-.02.05-.02.07-.01c3.44 1.57 7.15 1.57 10.55 0c.02-.01.05-.01.07.01c.11.09.22.17.33.26c.04.03.04.09-.01.11c-.52.31-1.07.56-1.64.78c-.04.01-.05.06-.04.09c.32.61.68 1.19 1.07 1.74c.03.01.06.02.09.01c1.72-.53 3.45-1.33 5.25-2.65c.02-.01.03-.03.03-.05c.44-4.53-.73-8.46-3.1-11.95c-.01-.01-.02-.02-.04-.02M8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.84 2.12-1.89 2.12m6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.83 2.12-1.89 2.12"/></svg>
-          </a>
+            <a href="https://discord.gg/EnQA8eRsbw">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M19.27 5.33C17.94 4.71 16.5 4.26 15 4a.1.1 0 0 0-.07.03c-.18.33-.39.76-.53 1.09a16.1 16.1 0 0 0-4.8 0c-.14-.34-.35-.76-.54-1.09c-.01-.02-.04-.03-.07-.03c-1.5.26-2.93.71-4.27 1.33c-.01 0-.02.01-.03.02c-2.72 4.07-3.47 8.03-3.1 11.95c0 .02.01.04.03.05c1.8 1.32 3.53 2.12 5.24 2.65c.03.01.06 0 .07-.02c.4-.55.76-1.13 1.07-1.74c.02-.04 0-.08-.04-.09c-.57-.22-1.11-.48-1.64-.78c-.04-.02-.04-.08-.01-.11c.11-.08.22-.17.33-.25c.02-.02.05-.02.07-.01c3.44 1.57 7.15 1.57 10.55 0c.02-.01.05-.01.07.01c.11.09.22.17.33.26c.04.03.04.09-.01.11c-.52.31-1.07.56-1.64.78c-.04.01-.05.06-.04.09c.32.61.68 1.19 1.07 1.74c.03.01.06.02.09.01c1.72-.53 3.45-1.33 5.25-2.65c.02-.01.03-.03.03-.05c.44-4.53-.73-8.46-3.1-11.95c-.01-.01-.02-.02-.04-.02M8.52 14.91c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.84 2.12-1.89 2.12m6.97 0c-1.03 0-1.89-.95-1.89-2.12s.84-2.12 1.89-2.12c1.06 0 1.9.96 1.89 2.12c0 1.17-.83 2.12-1.89 2.12"/></svg>
+            </a>
           </li>
           <li>
             <a href="https://t.me/oshoread">
@@ -196,12 +226,31 @@
           <li onclick="toggleTheme()">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" d="M12 19a1 1 0 0 1 .993.883L13 20v1a1 1 0 0 1-1.993.117L11 21v-1a1 1 0 0 1 1-1m6.313-2.09l.094.083l.7.7a1 1 0 0 1-1.32 1.497l-.094-.083l-.7-.7a1 1 0 0 1 1.218-1.567zm-11.306.083a1 1 0 0 1 .083 1.32l-.083.094l-.7.7a1 1 0 0 1-1.497-1.32l.083-.094l.7-.7a1 1 0 0 1 1.414 0M4 11a1 1 0 0 1 .117 1.993L4 13H3a1 1 0 0 1-.117-1.993L3 11zm17 0a1 1 0 0 1 .117 1.993L21 13h-1a1 1 0 0 1-.117-1.993L20 11zM6.213 4.81l.094.083l.7.7a1 1 0 0 1-1.32 1.497l-.094-.083l-.7-.7A1 1 0 0 1 6.11 4.74zm12.894.083a1 1 0 0 1 .083 1.32l-.083.094l-.7.7a1 1 0 0 1-1.497-1.32l.083-.094l.7-.7a1 1 0 0 1 1.414 0M12 2a1 1 0 0 1 .993.883L13 3v1a1 1 0 0 1-1.993.117L11 4V3a1 1 0 0 1 1-1m0 5a5 5 0 1 1-4.995 5.217L7 12l.005-.217A5 5 0 0 1 12 7"/></svg>
           </li>
+          </div>
         </ul>
-        <a href="https://discord.gg/EnQA8eRsbw" class="hamburger">
+        
+        <!--hamburger-icon-for-mobile-device--> <!--gets-hidden-on-desktop-displays-->
+        <a href="#" class="hamburger">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M4 18q-.425 0-.712-.288T3 17t.288-.712T4 16h16q.425 0 .713.288T21 17t-.288.713T20 18zm0-5q-.425 0-.712-.288T3 12t.288-.712T4 11h16q.425 0 .713.288T21 12t-.288.713T20 13zm0-5q-.425 0-.712-.288T3 7t.288-.712T4 6h16q.425 0 .713.288T21 7t-.288.713T20 8z"/></svg>
         </a>
     </nav>
-    <div class="loader"></div>
+    <script>
+  const hamburger = document.querySelector(".hamburger");
+  const menu = document.querySelector("ul.menu");
+  
+  hamburger.addEventListener("click", (e) => {
+    e.preventDefault();
+    menu.classList.toggle("show");
+  });
+  
+  // Optional: close dropdown when clicking outside
+  document.addEventListener("click", (e) => {
+    if (!hamburger.contains(e.target) && !menu.contains(e.target)) {
+      menu.classList.remove("show");
+    }
+  });
+</script>
+<div class="loader"></div>
     <div class="search">
       <div class="linearX">
         <input placeholder="Search" id="searchInput">
@@ -211,12 +260,23 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M15.88 9.29L12 13.17L8.12 9.29a.996.996 0 1 0-1.41 1.41l4.59 4.59c.39.39 1.02.39 1.41 0l4.59-4.59a.996.996 0 0 0 0-1.41c-.39-.38-1.03-.39-1.42 0"/></svg>
         </label>
         </div>
-    <div class="dialog">
-      <label for="initialsearch">Initial Text Search</label>
-      <input type="checkbox" name="initialsearch" id="initialsearch">
-    </div>
+      <div class="dialog">
+        <label for="initialsearch">Initial Text Search</label>
+        <input type="checkbox" name="initialsearch" id="initialsearch">
+      </div>
     </div>
 
+<!--filter-->
+<div class="radio-row">
+  <input type="radio" id="all" name="language" value="All" checked>
+  <label for="all">All</label>
+  
+  <input type="radio" id="hindi" name="language" value="Hindi">
+  <label for="hindi">Hindi</label>
+  
+  <input type="radio" id="english" name="language" value="English">
+  <label for="english">English</label>
+</div>
 
 <div id="data-container"></div>
 
@@ -264,16 +324,33 @@ document.querySelector('label.svg').addEventListener('click', () => {
     fetch('https://extremekrish.github.io/osho/osho_hindi.json').then(res => res.json()),
     fetch('https://extremekrish.github.io/osho/osho_english.json').then(res => res.json())
   ])
-    .then(([hindiData, englishData]) => {
-      // merge arrays
-      allData = [...hindiData, ...englishData];
-      loader.style.display = 'none';
-      renderItems(allData);
-    })
+  .then(([hindiData, englishData]) => {
+    window.hindiData = hindiData;
+    window.englishData = englishData;
+    allData = [...hindiData, ...englishData];
+  
+    loader.style.display = 'none';
+    renderItems(allData);
+  })
     .catch(err => {
       loader.innerText = 'Failed to load data.';
       console.error('Fetch error:', err);
     });
+
+
+// Language Filter
+document.querySelectorAll('input[name="language"]').forEach(radio => {
+  radio.addEventListener('change', () => {
+    const selected = document.querySelector('input[name="language"]:checked').value;
+
+    let filteredData = [];
+    if (selected === 'Hindi') filteredData = window.hindiData;
+    else if (selected === 'English') filteredData = window.englishData;
+    else filteredData = allData; // All
+
+    renderItems(filteredData);
+  });
+});
 
   // Function to render grid items
   function renderItems(items) {
@@ -306,6 +383,9 @@ let paginationInitialized = false;
 async function search(page = 1) {
   const input = searchInput.value.trim().toLowerCase();
   const isInitialSearch = searchmore.checked;
+  // Always reset to "All" when searching
+document.getElementById('all').checked = true;
+
 
   if (searchAbortController) searchAbortController.abort();
   searchAbortController = new AbortController();
@@ -364,9 +444,14 @@ $('#pagin').pagination({
 
 searchInput.addEventListener('input', () => {
   const query = searchInput.value.trim().toLowerCase();
-  const filtered = allData.filter(item =>
-    item.title.toLowerCase().includes(query)
-  );
+const selected = document.querySelector('input[name="language"]:checked').value;
+let dataset = allData;
+if (selected === 'Hindi') dataset = window.hindiData;
+else if (selected === 'English') dataset = window.englishData;
+
+const filtered = dataset.filter(item =>
+  item.title.toLowerCase().includes(query)
+);
 
   if (filtered.length === 0) {
     paginationInitialized = false; // reset

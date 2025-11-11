@@ -130,7 +130,10 @@ body, .container {
         align-items: center;
         width: 100%;
         box-sizing: border-box;
-    }
+position: relative;
+
+                
+            }
     nav a{
       font-weight: 500;
       text-decoration: none;
@@ -148,15 +151,25 @@ body, .container {
     margin-right: 8px;
 }
      nav ul.menu{
-         display: none;
+         display: flex;
         padding: 0;
         margin:0;
          list-style: none;
          justify-content: flex-end;
-         width: 100%;
+         width: auto;
          align-items: center;
          gap:32px;
      }
+     @keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
      nav li {
          font-size: 16px;
         padding: 0;
@@ -852,14 +865,47 @@ color:var(--bg);
       display: none;
   }
   
+  .smol-grid{
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        justify-content: flex-end;
+         width: auto;
+         align-items: center;
+         gap:32px;
+
+  }
+
+@media (max-width: 768px) {
+              nav ul.menu {
+              display: none;
+              position: absolute;
+              flex-direction: column;
+              background: var(--bg-dark);
+              top: 50px;
+              right: 50px;
+              z-index: 777;
+              padding: 12px 16px;
+              border:1px solid var(--border-muted);
+              border-radius:12px 0 12px 12px;
+          animation: dropdownFade 0.3s ease;
+          box-shadow: -5px 5px 10px 0 rgba(0, 0, 0, 0.1);
+                  
+              }
+          ul.menu.show {
+    display: flex;
+}
+.smol-grid{
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, auto);
+}
+}
 /* Tablet - 2 columns */
 @media (min-width: 480px) {
   .grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  nav ul.menu {
-    display: none;
-}
+
+
   .audioPlayer {
       width:100%;
      
@@ -878,9 +924,9 @@ color:var(--bg);
           width: 60%;
           margin: 16px auto 0 auto;
       }
-        nav ul.menu {
-        display: flex;
-        }
+ul.menu {
+    display: flex;
+}
         .hamburger{
             display: none;
         }
@@ -916,8 +962,7 @@ color:var(--bg);
       margin: 16px auto 0 auto;
 
   }
-  nav ul.menu{
-  }
+
     .audioPlayer {
       width:60%;
   }
